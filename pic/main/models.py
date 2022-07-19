@@ -6,16 +6,16 @@ from django.forms import IntegerField
 # Create your models here.
 class User(AbstractUser):
     phone = models.CharField(max_length=11, blank=True, null=True, unique=True)
-    gender = models.CharField(max_length=8, blank=True, null=True)
-    birthday = models.DateField(null=True, blank=True)
+    gender = models.CharField(max_length=8)
+    birthday = models.DateField()
     address = models.CharField(max_length=255, blank=True, null=True)
-    city = models.CharField(max_length=32, blank=True, null=True)
+    city = models.CharField(max_length=32)
     lga = models.CharField(max_length=32, blank=True, null=True)
-    state = models.CharField(max_length=32, blank=True, null=True)
-    country = models.CharField(max_length=32, blank=True, null=True)
+    state = models.CharField(max_length=32)
+    country = models.CharField(max_length=32)
     profile_pic = models.ImageField(blank=True, null=True, upload_to="main/users/profile-pics")
     linkedin = models.URLField(blank=True, null=True, unique=True)
-    slug = models.SlugField(blank=True, null=True)
+    slug = models.SlugField()
 
 
 class Company(models.Model):
