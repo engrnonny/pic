@@ -17,15 +17,8 @@ class User(AbstractUser):
     linkedin = models.URLField(blank=True, null=True, unique=True)
     slug = models.SlugField(blank=True, null=True)
 
-class user_work_profile():
-    profession = models.CharField(max_length=64, blank=True, null=True)
-    address = models.CharField(max_length=255, blank=True, null=True)
-    city = models.CharField(max_length=32, blank=True, null=True)
-    lga = models.CharField(max_length=32, blank=True, null=True)
-    state = models.CharField(max_length=32, blank=True, null=True)
-    country = models.CharField(max_length=32, blank=True, null=True)
 
-class company_profile():
+class Company(models.Model):
     name = models.CharField(max_length=255, blank=True, null=True)
     bio = models.TextField()
     registration_no = models.CharField(max_length=255, blank=True, null=True, unique=True)
@@ -37,31 +30,49 @@ class company_profile():
     lga = models.CharField(max_length=32, blank=True, null=True)
     state = models.CharField(max_length=32, blank=True, null=True)
     country = models.CharField(max_length=32, blank=True, null=True)
-    no_of_employees = models.IntegerField(blank=True, null=True)
+    employees = models.IntegerField(blank=True, null=True)
     rating = models.FloatField(blank=True, null=True)
     slug = models.SlugField(blank=True, null=True)
 
-
-class profession_category():
+class ProfessionCategory(models.Model):
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField()
     association = models.CharField(max_length=255, blank=True, null=True)
     slug = models.SlugField(blank=True, null=True)
 
-
-class profession_subcategory():
+class ProfessionSubcategory(models.Model):
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField()
+    category = models.ForeignKey(ProfessionCategory)
     association = models.CharField(max_length=255, blank=True, null=True)
     slug = models.SlugField(blank=True, null=True)
 
-class profession():
+class Profession(models.Model):
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField()
+    sub_category = models.ForeignKey(ProfessionSubcategory)
     association = models.CharField(max_length=255, blank=True, null=True)
     slug = models.SlugField(blank=True, null=True)
+    rating = models.FloatField(blank=True, null=True)
+    review = models.CharField(max_length=128)
 
-class association():
+class UserWorkProfile(models.Model):
+    user = models.ForeignKey(User)
+    profession = models.ForeignKey(Profession)
+    level = models.CharField(max_length=64)
+    company = models.ForeignKey(Company, blank=True, null=True)
+    address = models.CharField(max_length=255, blank=True, null=True)
+    city = models.CharField(max_length=32, blank=True, null=True)
+    lga = models.CharField(max_length=32, blank=True, null=True)
+    state = models.CharField(max_length=32, blank=True, null=True)
+    country = models.CharField(max_length=32, blank=True, null=True)
+    start_date = models.DateField(blank=True, null=True)
+    end_date = models.DateField(blank=True, null=True)
+    current_profession = models.BooleanField(default=False)
+    rating = models.FloatField(blank=True, null=True)
+    review = models.CharField(max_length=128)
+
+class Association(models.Model):
     name = models.CharField(max_length=255, blank=True, null=True, unique=True)
     description = models.TextField()
     city = models.CharField(max_length=32, blank=True, null=True)
