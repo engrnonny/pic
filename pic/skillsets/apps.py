@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class skillsetConfig(AppConfig):
+class skillsetsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
-    name = 'skillset'
+    name = 'skillsets'

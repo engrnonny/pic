@@ -1,3 +1,5 @@
-from django.shortcuts import render
+from django.http import HttpResponse
 
-# Create your views here.
+
+def apps(request):
+    return HttpResponse("This is the main page for Apps")

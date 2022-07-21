@@ -7,3 +7,6 @@ def index(request):
 
 def go(request):
     return HttpResponse("It works")
+
+# Example of a view with a default argument, incase argument is not provided through the URLs
+# def page(request, num=1):
