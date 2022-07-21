@@ -16,6 +16,7 @@ class User(AbstractUser):
     profile_pic = models.ImageField(blank=True, null=True, upload_to="main/users/profile-pics")
     linkedin = models.URLField(blank=True, null=True, unique=True)
     slug = models.SlugField(unique=True)
+    author = models.BooleanField(default=False)
 
     def __str__(self):
         return '%s %s' % (self.phone_no, self.gender)
@@ -50,7 +51,7 @@ class Company(models.Model):
     employees = models.PositiveIntegerField(blank=True, null=True)
     rating = models.FloatField(blank=True, null=True)
     slug = models.SlugField(blank=True, null=True, unique=True)
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, default='Unknown', on_delete=models.SET_DEFAULT)
+    creator = models.ForeignKey(User, default='Unknown', on_delete=models.SET_DEFAULT)
 
     class Meta:
         verbose_name_plural = 'companies'

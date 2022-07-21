@@ -1,0 +1,9 @@
+BACKEND
+
+    MODELS
+
+        - Auto slugify all SlugFields in all models.py
+        - Set get_absolute_url() in all models 
+
+FRONTEND
+
