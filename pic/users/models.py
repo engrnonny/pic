@@ -15,7 +15,7 @@ class User(AbstractUser):
     country = models.CharField(max_length=32)
     profile_pic = models.ImageField(blank=True, null=True, upload_to="main/users/profile-pics")
     linkedin = models.URLField(blank=True, null=True, unique=True)
-    slug = models.SlugField()
+    slug = models.SlugField(unique=True)
 
     def __str__(self):
         return '%s %s' % (self.phone_no, self.gender)
@@ -49,14 +49,15 @@ class Company(models.Model):
     country = models.CharField(max_length=32, blank=True, default='')
     employees = models.PositiveIntegerField(blank=True, null=True)
     rating = models.FloatField(blank=True, null=True)
-    slug = models.SlugField(blank=True, null=True)
+    slug = models.SlugField(blank=True, null=True, unique=True)
     creator = models.ForeignKey(settings.AUTH_USER_MODEL, default='Unknown', on_delete=models.SET_DEFAULT)
 
     class Meta:
         verbose_name_plural = 'companies'
 
     def __str__(self):
-        return f"{self.name} - {self.bio}"
+        return '%s' % (self.name)
+
 class UserWorkProfile(models.Model):
     user = models.ForeignKey(User, default='Unknown', on_delete=models.CASCADE)
     profession = models.ForeignKey(Profession, default='Unknown', on_delete=models.PROTECT)
@@ -73,6 +74,9 @@ class UserWorkProfile(models.Model):
     rating = models.FloatField(blank=True, null=True)
     review = models.CharField(max_length=128)
 
+    def __str__(self):
+        return '%s' % (self.user.username)
+
 class Association(models.Model):
     name = models.CharField(max_length=255, blank=True, null=True, unique=True)
     description = models.TextField()
@@ -82,9 +86,10 @@ class Association(models.Model):
     email = models.EmailField(unique=True, blank=True, null=True)
     phone = models.CharField(max_length=11, blank=True, default='')
     url = models.URLField(blank=True, null=True, unique=True)
-    slug = models.SlugField(blank=True, null=True)
+    slug = models.SlugField(blank=True, null=True, unique=True)
 
-
+    def __str__(self):
+        return '%s' % (self.name)
 """
 # 'related_name' should be plural
     followers = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name = 'user_followers', blank=True)
