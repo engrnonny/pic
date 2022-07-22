@@ -5,7 +5,7 @@ from skillsets.models import *
 
 # Create your models here.
 class User(AbstractUser):
-    phone_no = models.CharField(max_length=11, blank=True, null=True, unique=True)
+    phone_no = models.CharField(max_length=11, unique=True)
     gender = models.CharField(max_length=8)
     birthday = models.DateField()
     address = models.CharField(max_length=255, blank=True, default='')
@@ -13,10 +13,13 @@ class User(AbstractUser):
     lga = models.CharField(max_length=32, blank=True, default='')
     state = models.CharField(max_length=32)
     country = models.CharField(max_length=32)
+    bio = models.TextField(blank=True, default='')
     profile_pic = models.ImageField(blank=True, null=True, upload_to="main/users/profile-pics")
     linkedin = models.URLField(blank=True, null=True, unique=True)
     slug = models.SlugField(unique=True)
     author = models.BooleanField(default=False)
+    created_on = models.DateTimeField(auto_now_add=True)
+    modified_on = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return '%s %s' % (self.phone_no, self.gender)
@@ -37,9 +40,9 @@ class User(AbstractUser):
 """
 
 class Company(models.Model):
-    name = models.CharField(max_length=255, blank=True, default='')
+    name = models.CharField(max_length=255, default='')
     bio = models.TextField()
-    registration_no = models.CharField(max_length=255, blank=True, default='', unique=True)
+    registration_no = models.CharField(max_length=255, blank=True, null=True, unique=True)
     registration_date = models.DateField(null=True, blank=True)
     email = models.EmailField(unique=True, blank=True, null=True)
     phone = models.CharField(max_length=11, blank=True, default='')
@@ -52,6 +55,9 @@ class Company(models.Model):
     rating = models.FloatField(blank=True, null=True)
     slug = models.SlugField(blank=True, null=True, unique=True)
     creator = models.ForeignKey(User, default='Unknown', on_delete=models.SET_DEFAULT)
+    verified = models.BooleanField(default=False)
+    created_on = models.DateTimeField(auto_now_add=True)
+    modified_on = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name_plural = 'companies'
@@ -63,6 +69,8 @@ class UserWorkProfile(models.Model):
     user = models.ForeignKey(User, default='Unknown', on_delete=models.CASCADE)
     profession = models.ForeignKey(Profession, default='Unknown', on_delete=models.PROTECT)
     level = models.CharField(max_length=64)
+    employment_type = models.CharField(max_length=12, blank=True, default='')
+    description= models.TextField(blank=True, default='')
     company = models.ForeignKey(Company, blank=True, default='', on_delete=models.PROTECT)
     address = models.CharField(max_length=255, blank=True, default='')
     city = models.CharField(max_length=32, blank=True, default='')
@@ -74,25 +82,41 @@ class UserWorkProfile(models.Model):
     current_profession = models.BooleanField(default=False)
     rating = models.FloatField(blank=True, null=True)
     review = models.CharField(max_length=128)
+    created_on = models.DateTimeField(auto_now_add=True)
+    modified_on = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return '%s' % (self.user.username)
 
+class UserQualification(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    created_on = models.DateTimeField(auto_now_add=True)
+    modified_on = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return '%s' % (self.user)
+
 class Association(models.Model):
-    name = models.CharField(max_length=255, blank=True, null=True, unique=True)
-    description = models.TextField()
+    name = models.CharField(max_length=255, unique=True)
+    acronym = models.CharField(max_length=12)
+    description = models.TextField(blank=True, default='')
     city = models.CharField(max_length=32, blank=True, default='')
     lga = models.CharField(max_length=32, blank=True, default='')
     state = models.CharField(max_length=32, blank=True, default='')
     email = models.EmailField(unique=True, blank=True, null=True)
     phone = models.CharField(max_length=11, blank=True, default='')
     url = models.URLField(blank=True, null=True, unique=True)
-    slug = models.SlugField(blank=True, null=True, unique=True)
+    members = models.ManyToManyField(User, related_name="Users", blank=True, null=True)
+    slug = models.SlugField(unique=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+    modified_on = models.DateTimeField(auto_now=True)
+
+    # logo
 
     def __str__(self):
         return '%s' % (self.name)
+
 """
 # 'related_name' should be plural
     followers = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name = 'user_followers', blank=True)
-    following = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name = 'user_followings', blank=True)
 """
