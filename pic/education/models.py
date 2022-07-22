@@ -19,3 +19,9 @@ class Institution(models.Model):
     category = models.ManyToManyField(ProfessionSubCategory, related_name='professional_subcategories')
     category = models.ManyToManyField(Profession, related_name='professional')
     verified = models.BooleanField(default='')
+    rating = models.FloatField(blank=True, null=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+    modified_on = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return '%s' % (self.name)

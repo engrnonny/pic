@@ -81,7 +81,7 @@ class UserWorkProfile(models.Model):
     end_date = models.DateField(blank=True, null=True)
     current_profession = models.BooleanField(default=False)
     rating = models.FloatField(blank=True, null=True)
-    review = models.CharField(max_length=128)
+    review = models.CharField(max_length=128, blank=True,default='')
     created_on = models.DateTimeField(auto_now_add=True)
     modified_on = models.DateTimeField(auto_now=True)
 
@@ -108,6 +108,7 @@ class Association(models.Model):
     url = models.URLField(blank=True, null=True, unique=True)
     members = models.ManyToManyField(User, related_name="Users", blank=True, null=True)
     slug = models.SlugField(unique=True)
+    rating = models.FloatField(blank=True, null=True)
     created_on = models.DateTimeField(auto_now_add=True)
     modified_on = models.DateTimeField(auto_now=True)
 
@@ -115,6 +116,16 @@ class Association(models.Model):
 
     def __str__(self):
         return '%s' % (self.name)
+
+class Review(models.Model):
+    name = models.CharField(max_length=255, verbose_name='name of model object')
+    model = models.CharField(max_length=128, verbose_name='name of the model')
+    model_id = models.PositiveIntegerField(verbose_name='id of the model object')
+    comment = models.TextField()
+    reviewer = models.ForeignKey(User, default='Anonymous', on_delete=models.SET_DEFAULT)
+    anonymous = models.BooleanField(default=False)
+    created_on = models.DateTimeField(auto_now_add=True)
+    modified_on = models.DateTimeField(auto_now=True)
 
 """
 # 'related_name' should be plural
