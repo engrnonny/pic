@@ -31,7 +31,14 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'ads',
+    'apps',
+    'articles',
+    'datasets',
+    'education',
     'main',
+    'skillsets',
+    'users',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -74,7 +81,7 @@ WSGI_APPLICATION = 'pic.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-# """
+"""
 # SQlite
 DATABASES = {
     'default': {
@@ -94,7 +101,10 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-"""
+# """
+
+AUTH_USER_MODEL = "users.User"
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators

@@ -4,6 +4,7 @@ from users.models import User
 
 # Create your models here.
 
+
 class Institution(models.Model):
     name = models.CharField(max_length=255)
     acronym = models.CharField(max_length=12, blank=True, default='')
@@ -13,13 +14,15 @@ class Institution(models.Model):
     state = models.CharField(max_length=32, blank=True, default='')
     country = models.CharField(max_length=32, blank=True, default='')
     phone = models.CharField(max_length=24, blank=True, default='')
-    email= models.EmailField(blank=True, default='')
+    email = models.EmailField(blank=True, default='')
     alumni = models.ManyToManyField(User, related_name='graduates')
-    category = models.ManyToManyField(ProfessionCategory, related_name='professional_categories')
-    category = models.ManyToManyField(ProfessionSubCategory, related_name='professional_subcategories')
-    category = models.ManyToManyField(Profession, related_name='professional')
-    verified = models.BooleanField(default='')
-    rating = models.FloatField(blank=True, null=True)
+    category = models.ManyToManyField(
+        JobCategory, related_name='job_categories')
+    subcategory = models.ManyToManyField(
+        JobSubCategory, related_name='job_subcategories')
+    job = models.ManyToManyField(Job, related_name='institution_job')
+    verified = models.BooleanField(default=False)
+    rating = models.PositiveSmallIntegerField(default=0)
     created_on = models.DateTimeField(auto_now_add=True)
     modified_on = models.DateTimeField(auto_now=True)
 

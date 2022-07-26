@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import Ad
+class AdAdmin(admin.ModelAdmin):
+    list_display = ('title', 'active')
 
-# Register your models here.
+admin.site.register(Ad, AdAdmin)
