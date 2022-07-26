@@ -14,7 +14,7 @@ class JobCategory(models.Model):
 class JobSubCategory(models.Model):
     name = models.CharField(max_length=255, unique=True)
     description = models.TextField()
-    category = models.ForeignKey(JobCategory, default='Unknown', on_delete=models.SET_DEFAULT)
+    category = models.ForeignKey(JobCategory, on_delete=models.PROTECT)
     slug = models.SlugField(blank=True, unique=True)
     rating = models.PositiveSmallIntegerField(default=0)
     created_on = models.DateTimeField(auto_now_add=True)
@@ -37,7 +37,7 @@ class JobSubCategory(models.Model):
 class Job(models.Model):
     title = models.CharField(max_length=255, unique=True)
     description = models.TextField()
-    sub_category = models.ForeignKey(JobSubCategory, default='Unknown', on_delete=models.SET_DEFAULT)
+    sub_category = models.ForeignKey(JobSubCategory, on_delete=models.PROTECT)
     slug = models.SlugField(blank=True, unique=True)
     rating = models.PositiveSmallIntegerField(default=0)
     created_on = models.DateTimeField(auto_now_add=True)
