@@ -9,8 +9,33 @@ from django.utils.text import slugify
 
 
 class User(AbstractUser):
+    FEMALE = 'F'
+    MALE = 'M'
+    GENDER_CHOICES = [
+        (FEMALE, 'FEMALE'),
+        (MALE, 'MALE'),
+    ]
+
+    STATE_CHOICES = [
+        ('Abia', 'Abia'),
+        ('Adamawa', 'Adamawa'),
+        ('Anambra', 'Anambra'),
+        ('Bayelsa', 'Bayelsa'),
+        ('Benue', 'Benue'),
+        ('Borno', 'Borno'),
+        ('Cross Rivers', 'Cross Rivers'),
+        ('Delta', 'Delta'),
+        ('Edo', 'Edo'),
+        ('Imo', 'Imo'),
+        ('Lagos', 'Lagos'),
+        ('Ogun', 'Ogun'),
+        ('Oyo', 'Oyo'),
+        ('Rivers', 'Rivers'),
+        ('FCT', 'FCT'),
+    ]
+
     phone_no = models.CharField(max_length=11, unique=True)
-    gender = models.CharField(max_length=8)
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     birthday = models.DateField()
     address = models.CharField(max_length=255, blank=True, default='')
     city = models.CharField(max_length=32)
@@ -18,8 +43,7 @@ class User(AbstractUser):
     state = models.CharField(max_length=32)
     country = models.CharField(max_length=32)
     bio = models.TextField(blank=True, default='')
-    profile_pic = models.ImageField(
-        blank=True, null=True, upload_to="main/users/profile-pics")
+    profile_pic = models.ImageField(blank=True, null=True, upload_to="main/users/profile-pics")
     linkedin = models.URLField(blank=True, null=True, unique=True)
     slug = models.SlugField(unique=True, blank=True)
     author = models.BooleanField(default=False)

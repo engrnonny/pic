@@ -3,7 +3,7 @@ from django.shortcuts import render
 
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the polls index.")
+    return HttpResponse("Hello, world. You're at the main page.")
 
 def go(request):
     return HttpResponse("It works")
