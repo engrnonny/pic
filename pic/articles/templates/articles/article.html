@@ -1,0 +1,36 @@
+{% extends "main/layout.html" %}
+
+{% block title %}
+    PIC | {{ article.author }} | {{ article.title }}
+{% endblock %}
+
+
+{% block main %}
+    <article>
+        <header>
+            {{ article.title }}
+        </header>
+        <section>
+            <div>
+                {{ article.main_paragraph }}
+            </div>
+            <div>
+                {{ article.body }}
+            </div>
+            <div>
+                <span>{{ article.author }}</span><span>{{ article.modified_on }}</span>
+            </div>
+        </section>
+        <section>
+            Jobs go here
+        </section>
+        <section>
+            Tags go here
+        </section>
+        <footer>
+            <nav>
+                Likes, views, comments, share buttons go here
+            </nav>
+        </footer>
+    </article>
+{% endblock %}

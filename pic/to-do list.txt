@@ -1,0 +1,13 @@
+BACKEND
+
+    MODELS
+
+        - Auto slugify all SlugFields in all models.py
+        - Set get_absolute_url() in all models
+
+    VIEWS
+
+        - Create a view function in User app. It should be able to perform CRUD on Review model in User app. Specifically, it should be able to create a review on any model that would have a review.
+
+FRONTEND
+

@@ -5,15 +5,13 @@
 {% endblock %}
 
 
-{% block body %}
-    <main>
-        <article>
-            <header>
-                {{ ad.title }}
-            </header>
-            <section>
-                {{ ad.message }}
-            </section>
-        </article>
-    </main>
+{% block main %}
+    <article>
+        <header>
+            {{ ad.title }}
+        </header>
+        <section>
+            {{ ad.message }}
+        </section>
+    </article>
 {% endblock %}
