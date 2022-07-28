@@ -1,17 +1,52 @@
-from django.http import HttpResponse
+from django.shortcuts import get_list_or_404, get_object_or_404, render
+from .models import *
+
+# Job categories list view
+
+def job_categories(request):
+    job_categories = get_list_or_404(JobCategory)
+    context = {
+        'job_categories': job_categories
+    }
+    return render(request, 'skillsets/job_categories.html', context)
 
 
-def skillsets(request):
-    return HttpResponse("This is the main page for Skillsets")
+# Single job category detail view
 
-# def skill(request, slug):
-#     return HttpResponse("This is the main page for %s skill" % (slug))
+def job_category(request, slug):
+    job_category = get_object_or_404(JobCategory, slug=slug)
+    job_category_subcategories = get_list_or_404(JobSubCategory, category__id=job_category.id)
+    context = {
+        'job_category': job_category,
+        'job_category_subcategories': job_category_subcategories
+    }
+    return render(request, 'skillsets/job_category.html', context)
 
-# def job_category(request, slug):
-#     return HttpResponse("This is the main page for %s job category" % (slug))
 
-# def job_subcategory(request, category, slug):
-#     return HttpResponse("This is the main page for %s subcategory of %s category" % (category, slug))
+# Single Job Subcategory detail view
 
-# def job(request, slug):
-#     return HttpResponse("This is the main page for %s job" % (slug))
+def job_subcategory(request, category, slug):
+    job_subcategory = get_object_or_404(JobSubCategory, slug=slug)
+    job_category = get_object_or_404(JobCategory, slug=category)
+    jobs_under_subcategory = get_list_or_404(Job, sub_category__id=job_subcategory.id)
+    context = {
+        'job_category': job_category,
+        'job_subcategory': job_subcategory,
+        'jobs_under_subcategory': jobs_under_subcategory
+    }
+    return render(request, 'skillsets/job_subcategory.html', context)
+
+
+# Single Job detail view
+
+def job(request, category, subcategory, slug):
+    job_category = get_object_or_404(JobCategory, slug=category)
+    job_subcategory = get_object_or_404(JobSubCategory, slug=subcategory)
+    job = get_object_or_404(Job, slug=slug)
+    context = {
+        'job_category': job_category,
+        'job_subcategory': job_subcategory,
+        'job': job
+    }
+    return render(request, 'skillsets/job.html', context)
+

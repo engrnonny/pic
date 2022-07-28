@@ -9,11 +9,9 @@ from django.utils.text import slugify
 
 
 class User(AbstractUser):
-    FEMALE = 'F'
-    MALE = 'M'
     GENDER_CHOICES = [
-        (FEMALE, 'FEMALE'),
-        (MALE, 'MALE'),
+        ('F', 'FEMALE'),
+        ('M', 'MALE'),
     ]
 
     STATE_CHOICES = [
@@ -60,18 +58,6 @@ class User(AbstractUser):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.username)
         return super().save(*args, **kwargs)
-
-
-"""
-# Use the below code for file upload by user. Remember to use separate folders based on the usage of the files. E.g, profile pics should be uploaded to a folder called "profile pictures", etc.
-
-    def get_upload_path(instance, filename):
-        return os.path.join('account/avatars/', now().date().strftime("%Y/%m/%d"), filename)
-
-    class User(AbstractUser):
-        avatar = models.ImageField(blank=True, upload_to=get_upload_path)
-"""
-
 
 class Company(models.Model):
     name = models.CharField(max_length=255, default='')

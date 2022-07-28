@@ -21,7 +21,7 @@ class Article(models.Model):
     category = models.ManyToManyField(JobCategory, related_name='article_category', blank=True)
     subcategory = models.ManyToManyField(JobSubCategory, related_name='article_category', blank=True)
     job = models.ManyToManyField(Job, related_name='article_category', blank=True)
-    tag = models.ManyToManyField(Tag, related_name='article_tag', blank=True)
+    tags = models.ManyToManyField(Tag, related_name='article_tags', blank=True)
     image_0 = models.ImageField(blank=True, upload_to=get_upload_path)
     image_1 = models.ImageField(blank=True, upload_to=get_upload_path)
     image_2 = models.ImageField(blank=True, upload_to=get_upload_path)

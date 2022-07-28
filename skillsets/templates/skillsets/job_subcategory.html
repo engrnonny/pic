@@ -1,0 +1,42 @@
+{% extends "main/layout.html" %}
+
+{% block title %}
+    PIC | Jobs | {{ job_subcategory.category }} | {{ job_subcategory.name }}
+{% endblock %}
+
+
+{% block main %}
+    <article>
+        <header>
+            <h1>
+                {{ job_subcategory.name }}
+            </h1>
+        </header>
+        <section>
+            <span>{{ job_subcategory.outlook_summary }}</span>
+            <span>{{ job_subcategory.rating }}</span>
+        </section>
+        <section>
+                {{ job_subcategory.description|safe }}
+        </section>
+        <section>
+                {{ job_subcategory.outlook|safe }}
+        </section>
+        <section>
+            Top 10 most notable companies, based on users' ratings, in this category goes here
+        </section>
+        <section>
+            <ol>
+            {% for job in jobs_under_subcategory %}
+                <li><a href="{{ job.get_absolute_url }}">{{ job.title }}</a></li>
+            {% endfor %}
+            </ol>
+        </section>
+        <section>
+            Skills go here
+        </section>
+        <section>
+            Tags go here
+        </section>
+    </article>
+{% endblock %}

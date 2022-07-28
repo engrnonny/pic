@@ -1,0 +1,14 @@
+{% extends "main/layout.html" %}
+
+{% block title %}
+    PIC | Jobs | Categories
+{% endblock %}
+
+
+{% block main %}
+    <ol>
+        {% for category in job_categories %}
+        <li><a href="{{ category.get_absolute_url }}">{{ category.name }}</a></li>
+        {% endfor %}
+    </ol>
+{% endblock %}
