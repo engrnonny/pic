@@ -5,14 +5,53 @@
     <head>
         <title>
         {% block title %}
-        {% endblock %}
+        {% endblock title %}
         </title>
 
     </head>
     <body>
+        <header>
+            <nav>
+                <span>
+                    <a href="{% url 'index' %}">
+                        Home
+                    </a>
+                </span>
+                <span>
+                    <a href="{% url 'about' %}">
+                        About
+                    </a>
+                </span>
+                <span>
+                    <a href="{% url 'articles' %}">
+                        information
+                    </a>
+                </span>
+                <span>
+                    <a href="{% url 'skillsets' %}">
+                        Skillsets
+                    </a>
+                </span>
+                <span>
+                    <a href="{% url 'resources' %}">
+                        Resources
+                    </a>
+                </span>
+                <span>
+                    <a href="{% url 'ads' %}">
+                        Ads
+                    </a>
+                </span>
+                <span>
+                    <a href="{% url 'members-landing-page' %}">
+                        Members
+                    </a>
+                </span>
+            </nav>
+        </header>
         <main>
             {% block main %}
-            {% endblock %}
+            {% endblock main %}
         </main>
     </body>
 </html>

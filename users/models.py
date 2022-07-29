@@ -14,6 +14,19 @@ class User(AbstractUser):
         ('M', 'MALE'),
     ]
 
+    TITLE_CHOICES = [
+        ('BARR', 'Barr'),
+        ('DR', 'Dr'),
+        ('ENGR', 'Engr'),
+        ('PROF', 'Prof'),
+    ]
+
+    AUTHOR_STATUS_CHOICES = [
+        ('N', 'NO'),
+        ('P', 'PENDING'),
+        ('Y', 'YES'),
+    ]
+
     STATE_CHOICES = [
         ('Abia', 'Abia'),
         ('Adamawa', 'Adamawa'),
@@ -32,6 +45,7 @@ class User(AbstractUser):
         ('FCT', 'FCT'),
     ]
 
+    title = models.CharField(max_length=6, choices=TITLE_CHOICES, blank=True, default='')
     phone_no = models.CharField(max_length=11, unique=True)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
     birthday = models.DateField()
@@ -44,7 +58,7 @@ class User(AbstractUser):
     profile_pic = models.ImageField(blank=True, null=True, upload_to="main/users/profile-pics")
     linkedin = models.URLField(blank=True, null=True, unique=True)
     slug = models.SlugField(unique=True, blank=True)
-    author = models.BooleanField(default=False)
+    author = models.CharField(max_length=1, choices=AUTHOR_STATUS_CHOICES, default='N')
     created_on = models.DateTimeField(auto_now_add=True)
     modified_on = models.DateTimeField(auto_now=True)
 

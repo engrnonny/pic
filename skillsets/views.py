@@ -1,6 +1,11 @@
 from django.shortcuts import get_list_or_404, get_object_or_404, render
 from .models import *
 
+# Skillsets landing page
+
+def skillsets(request):
+    return render(request, 'skillsets/skillsets.html')
+
 # Job categories list view
 
 def job_categories(request):

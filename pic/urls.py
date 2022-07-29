@@ -23,7 +23,7 @@ urlpatterns = [
     path('ads/', include('ads.urls')),
     path('apps/', include('apps.urls')),
     path('articles/', include('articles.urls')),
-    path('datasets/', include('datasets.urls')),
+    path('resources/', include('resources.urls')),
     path('education/', include('education.urls')),
     path('', include('main.urls')),
     path('skillsets/', include('skillsets.urls')),

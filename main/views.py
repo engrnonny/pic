@@ -1,12 +1,12 @@
-from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import get_list_or_404, get_object_or_404, redirect, render
 
+
+# Home page
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the main page.")
+    return render(request, 'main/index.html')
 
-def go(request):
-    return HttpResponse("It works")
+# About page
 
-# Example of a view with a default argument, incase argument is not provided through the URLs
-# def page(request, num=1):
+def about(request):
+    return render(request, 'main/about.html')

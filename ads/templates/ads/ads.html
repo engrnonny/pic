@@ -1,0 +1,18 @@
+{% extends 'main/base.html' %}
+
+{% block title %}
+PIC | Ads
+{% endblock title %}
+
+{% block main %}
+<header>
+    <h1>
+        Ads
+    </h1>
+</header>
+<ul>
+    {% for ad in ads %}
+        <li>{{ ad }}</li>
+    {% endfor %}
+</ul>
+{% endblock main %}
