@@ -1,14 +1,14 @@
-{% extends "main/layout.html" %}
+{% extends "main/base.html" %}
 
 {% block title %}
-    PIC | Jobs | Categories
+PIC | Jobs | Categories
 {% endblock %}
 
 
 {% block main %}
-    <ol>
-        {% for category in job_categories %}
-        <li><a href="{{ category.get_absolute_url }}">{{ category.name }}</a></li>
-        {% endfor %}
-    </ol>
+<ol>
+    {% for category in job_categories %}
+    <li><a href="{{ category.get_absolute_url }}">{{ category.name }}</a></li>
+    {% endfor %}
+</ol>
 {% endblock %}

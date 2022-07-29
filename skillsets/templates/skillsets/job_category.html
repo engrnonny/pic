@@ -1,42 +1,42 @@
-{% extends "main/layout.html" %}
+{% extends "main/base.html" %}
 
 {% block title %}
-    PIC | Jobs | {{ job_category.name }}
+PIC | Jobs | {{ job_category.name }}
 {% endblock %}
 
 
 {% block main %}
-    <article>
-        <header>
-            <h1>
-                {{ job_category.name }}
-            </h1>
-        </header>
-        <section>
-            <span>{{ job_category.outlook_summary }}</span>
-            <span>{{ job_category.rating }}</span>
-        </section>
-        <section>
-                {{ job_category.description|safe }}
-        </section>
-        <section>
-                {{ job_category.outlook|safe }}
-        </section>
-        <section>
-            Top 10 most notable companies, based on users' ratings, in this category goes here
-        </section>
-        <section>
-            <ol>
+<article>
+    <header>
+        <h1>
+            {{ job_category.name }}
+        </h1>
+    </header>
+    <section>
+        <span>{{ job_category.outlook_summary }}</span>
+        <span>{{ job_category.rating }}</span>
+    </section>
+    <section>
+        {{ job_category.description|safe }}
+    </section>
+    <section>
+        {{ job_category.outlook|safe }}
+    </section>
+    <section>
+        Top 10 most notable companies, based on users' ratings, in this category goes here
+    </section>
+    <section>
+        <ol>
             {% for subcategory in job_category_subcategories %}
-                <li><a href="{{ subcategory.get_absolute_url }}">{{ subcategory.name }}</a></li>
+            <li><a href="{{ subcategory.get_absolute_url }}">{{ subcategory.name }}</a></li>
             {% endfor %}
-            </ol>
-        </section>
-        <section>
-            Skills go here
-        </section>
-        <section>
-            Tags go here
-        </section>
-    </article>
+        </ol>
+    </section>
+    <section>
+        Skills go here
+    </section>
+    <section>
+        Tags go here
+    </section>
+</article>
 {% endblock %}

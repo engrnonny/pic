@@ -1,4 +1,5 @@
-from django.shortcuts import get_list_or_404, get_object_or_404, render
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_list_or_404, get_object_or_404, redirect, render
 
 from .forms import ArticleForm
 from .models import *
@@ -24,12 +25,38 @@ def article(request, slug):
 
 
 # Create new article
-
+@login_required
 def new_article(request):
+    if request.user.author == False:
+        return redirect('register')
+
     if request.method == 'POST':
         form = ArticleForm(request.POST)
         if form.is_valid():
-            print(form)
+            new_article = form.save(commit=False)
+            new_article.author = request.user
+            new_article.save()
+            # Message: You're not registered as an author. Please registered to continue.
+            return redirect(new_article)
+
+    else:
+        form = ArticleForm()
+        context = {
+            'form': form
+        }
+        return render(request, 'articles/new_article.html', context)
+
+
+# Create new article
+
+def edit_article(request):
+    if request.method == 'POST':
+        form = ArticleForm(request.POST)
+        if form.is_valid():
+            new_article = form.save(commit=False)
+            new_article.author = request.user
+            new_article.save()
+            return redirect(new_article)
         else:
             pass
     else:

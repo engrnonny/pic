@@ -1,17 +1,17 @@
-{% extends "main/layout.html" %}
+{% extends "main/base.html" %}
 
 {% block title %}
-    PIC | Ad
+PIC | Ad
 {% endblock %}
 
 
 {% block main %}
-    <article>
-        <header>
-            {{ ad.title }}
-        </header>
-        <section>
-            {{ ad.message }}
-        </section>
-    </article>
+<article>
+    <header>
+        {{ ad.title }}
+    </header>
+    <section>
+        {{ ad.message }}
+    </section>
+</article>
 {% endblock %}

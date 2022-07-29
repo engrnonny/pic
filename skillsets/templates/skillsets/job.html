@@ -1,40 +1,40 @@
-{% extends "main/layout.html" %}
+{% extends "main/base.html" %}
 
 {% block title %}
-    PIC | Jobs | {{ job_category.name }} | {{ job_subcategory.name }} | {{ job.title }}
+PIC | Jobs | {{ job_category.name }} | {{ job_subcategory.name }} | {{ job.title }}
 {% endblock %}
 
 
 {% block main %}
-    <article>
-        <header>
-            <h1>
-                {{ job.title }}
-            </h1>
-        </header>
-        <section>
-            <span>{{ job.outlook_summary }}</span>
-            <span>{{ job.rating }}</span>
-        </section>
-        <section>
-                {{ job.description|safe }}
-        </section>
-        <section>
+<article>
+    <header>
+        <h1>
+            {{ job.title }}
+        </h1>
+    </header>
+    <section>
+        <span>{{ job.outlook_summary }}</span>
+        <span>{{ job.rating }}</span>
+    </section>
+    <section>
+        {{ job.description|safe }}
+    </section>
+    <section>
         <ol>
             {{ job.skills }}
         </ol>
-        </section>
-        <section>
-                {{ job.outlook|safe }}
-        </section>
-        <section>
-            Top 10 most notable companies, based on users' ratings, in this category goes here
-        </section>
-        <section>
-            Jobs subcategories go here
-        </section>
-        <section>
-            Tags go here
-        </section>
-    </article>
+    </section>
+    <section>
+        {{ job.outlook|safe }}
+    </section>
+    <section>
+        Top 10 most notable companies, based on users' ratings, in this category goes here
+    </section>
+    <section>
+        Jobs subcategories go here
+    </section>
+    <section>
+        Tags go here
+    </section>
+</article>
 {% endblock %}

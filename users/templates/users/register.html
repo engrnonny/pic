@@ -1,0 +1,12 @@
+{% extends "main/base.html" %}
+
+{% block title %}
+PIC | Jobs | Categories
+{% endblock %}
+
+
+{% block main %}
+    <form action="{% url 'register' %}" method="post">
+        <input type="submit" value="Create my account">
+    </form>
+{% endblock %}

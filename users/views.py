@@ -1,17 +1,8 @@
-from django.http import HttpResponse
+from django.shortcuts import get_list_or_404, get_object_or_404, redirect, render
 
 
-def users(request):
-    return HttpResponse("This is the main page for Users")
-
-
-def user_profile(request, slug):
-    return HttpResponse('This profile is for %s' % (slug))
-
-
-def company_profile(request, slug):
-    return HttpResponse('This profile is for %s company' % (slug))
-
-
-def association_profile(request, slug):
-    return HttpResponse('This profile is for %s association' % (slug))
+def register(request):
+    if request.method == 'post':
+        pass
+    else:
+        return render(request, 'users/register.html')

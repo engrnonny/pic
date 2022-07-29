@@ -1,4 +1,18 @@
+APPS (PAGES TO BE CREATED)
+
+    ARTICLES
+
+    USERS
+
+        - Login page
+        - Profile page
+
+
 BACKEND
+
+    FORMS
+
+        - Create UserModelform to register a new user in users.forms
 
     MODELS
 
