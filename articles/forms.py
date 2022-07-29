@@ -4,13 +4,17 @@ from .models import Article
 class ArticleForm(ModelForm):
     class Meta:
         model = Article
-        fields = ['title', 'main_paragraph', 'body', 'video_link', '']
-
-
-
-
-
-
+        fields = [
+            'title',
+            'main_paragraph',
+            'body',
+            'video_link',
+            'category',
+            'subcategory',
+            'job',
+            'tags',
+            'image_0'
+            ]
 
     # title = models.CharField(max_length=255, unique=True)
     # main_paragraph = models.CharField(max_length=255)

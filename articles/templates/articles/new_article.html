@@ -1,0 +1,15 @@
+{% extends "main/layout.html" %}
+
+{% block title %}
+    PIC | {{ article.author }} | {{ article.title }}
+{% endblock %}
+
+
+{% block main %}
+    <form action="{% url 'new-article' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Create Article">
+    </form>
+{% endblock %}
+
