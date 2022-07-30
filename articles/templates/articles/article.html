@@ -6,26 +6,45 @@ PIC | {{ article.author }} | {{ article.title }}
 
 
 {% block main %}
+{% include 'articles/articles_header.html' %}
 <article>
     <header>
-        TITLE: {{ article.title }}
+        <strong>TITLE:</strong> {{ article.title }}
     </header>
     <section>
         <div>
-            <strong>Main Paragraph</strong>{{ article.main_paragraph }}
+            <strong>Main Paragraph:</strong> {{ article.main_paragraph }}
         </div>
         <div>
-            <strong>Body</strong>{{ article.body|safe }}
+            <strong>Body:</strong> {{ article.body|safe }}
         </div>
         <div>
-            <strong>Author</strong><span>{{ article.author }}</span><span>{{ article.modified_on }}</span>
+            <strong>Author:</strong> <span>{{ article.author }}</span>
+        </div>
+        <div>
+            <strong>Last modified on:</strong> <span>{{ article.modified_on }}</span>
         </div>
     </section>
     <section>
-        Jobs go here
+        {% if jobs %}
+        <div>
+            {% for job in jobs %}
+            <span>{{ job.title}}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+        <div>
+            Jobs subcategory go here
+        </div>
+        <div>
+            Jobs category go here
+        </div>
     </section>
     <section>
         Tags go here
+    </section>
+    <section>
+        Skills go here
     </section>
     <footer>
         <nav>
@@ -33,4 +52,14 @@ PIC | {{ article.author }} | {{ article.title }}
         </nav>
     </footer>
 </article>
+<footer>
+    <section>
+        <span>
+            <button>Previous</button>
+        </span>
+        <span>
+            <button>Next</button>
+        </span>
+    </section>
+</footer>
 {% endblock %}
