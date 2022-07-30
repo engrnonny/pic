@@ -3,8 +3,9 @@ from articles.views import *
 
 
 urlpatterns = [
-    path('', articles, name='articles'),
-    path('new/', new_article, name='new-article'),
+    path('', articles_landing_page, name='articles-landing-page'),
+    path('all/', all_articles, name='all-articles'),
+    path('<str>/', article_group, name='article-group'),
     path('<slug:slug>/', article, name='article'),
 ]
 

@@ -1,15 +1,15 @@
 from django.shortcuts import get_list_or_404, get_object_or_404, render
-from .models import *
+from .models import Ad
 
 
 # All ads view
 
 def ads(request):
-    ads = get_list_or_404(Ad)
-    context = {
-        'ads': ads
-    }
-    return render(request, 'ads/ads.html', context)
+    # ads = get_list_or_404(Ad)
+    # context = {
+    #     'ads': ads
+    # }
+    return render(request, 'ads/ads.html')
 
 
 # Single Ad view

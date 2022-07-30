@@ -2,16 +2,30 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_list_or_404, get_object_or_404, redirect, render
 
 from .forms import ArticleForm
-from .models import *
+from .models import Article, Tag
+
+# Articles landing page
+
+def articles_landing_page(request):
+    return render(request, 'articles/articles_landing_page.html')
 
 # Articles list view
 
-def articles(request):
+def all_articles(request):
     articles = get_list_or_404(Article, published=True)
     context = {
         'articles': articles
     }
-    return render(request, 'articles/articles.html', context)
+    return render(request, 'articles/all_articles.html', context)
+
+# Articles Group list view
+
+def article_group(request, str):
+    articles = list(Article.objects.filter(published=True, group=str))
+    context = {
+        'articles': articles
+    }
+    return render(request, 'articles/all_articles.html', context)
 
 
 # Single article detail view

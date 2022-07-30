@@ -14,15 +14,16 @@ def get_upload_path(self, filename):
 
 class Article(models.Model):
 
-    TYPE_CHOICES = [
-        ('GI', 'General Information'),
-        ('N', 'News'),
+    GROUP_CHOICES = [
+        ('general', 'General Information'),
+        ('interviews', 'Interviews'),
+        ('news', 'News'),
     ]
 
     title = models.CharField(max_length=255, unique=True)
     main_paragraph = models.CharField(max_length=255)
     body = models.TextField()
-    group = models.CharField(max_length=2, choices=TYPE_CHOICES, default='GI')
+    group = models.CharField(max_length=12, choices=GROUP_CHOICES, default='general')
     video_link = models.URLField(blank=True, null=True)
     category = models.ManyToManyField(JobCategory, related_name='article_category', blank=True)
     subcategory = models.ManyToManyField(JobSubCategory, related_name='article_category', blank=True)

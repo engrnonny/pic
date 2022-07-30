@@ -1,0 +1,24 @@
+
+<header>
+    <h1>Articles</h1>
+    <nav>
+        <span>
+            <a href="{% url 'all-articles' %}">All articles</a>
+        </span>
+        <span>
+            <a href="{% url 'article-group' 'general' %}">
+                General Information
+            </a>
+        </span>
+        <span>
+            <a href="{% url 'article-group' 'interviews' %}">
+                Interviews
+            </a>
+        </span>
+        <span>
+            <a href="{% url 'article-group' 'news' %}">
+                News
+            </a>
+        </span>
+    </nav>
+</header>
