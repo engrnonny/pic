@@ -1,7 +1,10 @@
 from django.db import models
 from django.forms import CharField
 from django.urls import reverse
-from users.models import *
+from django.utils.text import slugify
+
+from skillsets.models import JobCategory, JobSubCategory, Job
+from users.models import User
 
 class Tag(models.Model):
     name = models.CharField(max_length=64)
@@ -19,6 +22,15 @@ class Article(models.Model):
         ('interviews', 'Interviews'),
         ('news', 'News'),
     ]
+
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('published', 'Published'),
+        ('unpublished', 'Unpublished')
+    ]
+
+    def default_approver():
+        return User.objects.get(username='admin').pk
 
     title = models.CharField(max_length=255, unique=True)
     main_paragraph = models.CharField(max_length=255)
@@ -42,7 +54,8 @@ class Article(models.Model):
     author = models.ForeignKey(User, on_delete=models.RESTRICT)
     created_on = models.DateTimeField(auto_now_add=True)
     modified_on = models.DateTimeField(auto_now=True)
-    published = models.BooleanField(default=False)
+    status = models.CharField(max_length=12, choices=STATUS_CHOICES, default='pending')
+    approver = models.ForeignKey(User, on_delete=models.SET_DEFAULT, default=default_approver, related_name='approver_user')
     slug = models.SlugField(max_length=255, unique=True, blank=True)
     likes = models.ManyToManyField(User, related_name='user_likes', blank=True)
     views = models.PositiveBigIntegerField(default=0)
@@ -52,7 +65,10 @@ class Article(models.Model):
         return '%s %s' % (self.author, self.id)
 
     def get_absolute_url(self):
-        return reverse('article', kwargs={'slug': self.slug})
+        return reverse('article', kwargs={
+            'group': self.group,
+            'slug': self.slug
+            })
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)

@@ -12,7 +12,7 @@ def articles_landing_page(request):
 # Articles list view
 
 def all_articles(request):
-    articles = get_list_or_404(Article, published=True)
+    articles = get_list_or_404(Article, status='published')
     context = {
         'articles': articles
     }
@@ -21,7 +21,7 @@ def all_articles(request):
 # Articles Group list view
 
 def article_group(request, str):
-    articles = list(Article.objects.filter(published=True, group=str))
+    articles = list(Article.objects.filter(status='published', group=str))
     context = {
         'articles': articles
     }
@@ -30,8 +30,8 @@ def article_group(request, str):
 
 # Single article detail view
 
-def article(request, slug):
-    article = get_object_or_404(Article, slug=slug)
+def article(request, group, slug):
+    article = get_object_or_404(Article, group=group, slug=slug)
     context = {
         'article': article
     }

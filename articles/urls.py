@@ -6,7 +6,7 @@ urlpatterns = [
     path('', articles_landing_page, name='articles-landing-page'),
     path('all/', all_articles, name='all-articles'),
     path('<str>/', article_group, name='article-group'),
-    path('<slug:slug>/', article, name='article'),
+    path('<str:group>/<slug:slug>/', article, name='article'),
 ]
 
 # urlpatterns = [

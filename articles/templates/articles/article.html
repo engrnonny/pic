@@ -8,17 +8,17 @@ PIC | {{ article.author }} | {{ article.title }}
 {% block main %}
 <article>
     <header>
-        {{ article.title }}
+        TITLE: {{ article.title }}
     </header>
     <section>
         <div>
-            {{ article.main_paragraph }}
+            <strong>Main Paragraph</strong>{{ article.main_paragraph }}
         </div>
         <div>
-            {{ article.body|safe }}
+            <strong>Body</strong>{{ article.body|safe }}
         </div>
         <div>
-            <span>{{ article.author }}</span><span>{{ article.modified_on }}</span>
+            <strong>Author</strong><span>{{ article.author }}</span><span>{{ article.modified_on }}</span>
         </div>
     </section>
     <section>
