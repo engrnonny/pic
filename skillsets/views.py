@@ -55,3 +55,13 @@ def job(request, category, subcategory, slug):
     }
     return render(request, 'skillsets/job.html', context)
 
+
+# Single Skill detail view
+
+def skill(request, slug):
+    skill = get_object_or_404(Skill, slug=slug)
+    context = {
+        'skill': skill
+    }
+    return render(request, 'skillsets/skill.html', context)
+

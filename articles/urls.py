@@ -5,6 +5,7 @@ from articles.views import *
 urlpatterns = [
     path('', articles_landing_page, name='articles-landing-page'),
     path('all/', all_articles, name='all-articles'),
+    path('tag/<slug:slug>/', article_tag, name='tag'),
     path('<str>/', article_group, name='article-group'),
     path('<str:group>/<slug:slug>/', article, name='article'),
 ]

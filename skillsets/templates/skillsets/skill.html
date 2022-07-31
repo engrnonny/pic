@@ -1,0 +1,40 @@
+{% extends "main/base.html" %}
+
+{% block title %}
+PIC | Skills | {{ skill.name }}
+{% endblock %}
+
+
+{% block main %}
+<article>
+    <header>
+        <h1>
+            {{ skill.name }}
+        </h1>
+    </header>
+    <section>
+        <span>{{ skill.rating }}</span>
+        <span>{{ skill.outlook_summary }}</span>
+    </section>
+    <section>
+        {{ skill.outlook_details|safe }}
+    </section>
+    <section>
+        {{ skill.description|safe }}
+    </section>
+    <section>
+        <div>
+            Related job categories
+        </div>
+        <div>
+            Related job subcategories
+        </div>
+        <div>
+            Related jobs
+        </div>
+    </section>
+    <section>
+        Top 10 most notable companies, based on users' ratings, in this category goes here
+    </section>
+</article>
+{% endblock %}

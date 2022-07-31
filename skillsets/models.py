@@ -5,6 +5,8 @@ from django.utils.text import slugify
 class Skill(models.Model):
     name = models.CharField(max_length=64, unique=True)
     description = models.TextField()
+    outlook_details = models.TextField(blank=True, null=True)
+    outlook_summary = models.CharField(max_length=32, blank=True, default='')
     rating = models.PositiveSmallIntegerField(default=0)
     slug = models.SlugField(blank=True, unique=True)
     created_on = models.DateTimeField(auto_now_add=True)

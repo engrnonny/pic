@@ -3,7 +3,7 @@ from django.shortcuts import get_list_or_404, get_object_or_404, redirect, rende
 
 from .forms import ArticleForm
 from .models import Article, Tag
-from skillsets.models import Job, JobCategory, JobSubCategory
+from skillsets.models import Job, JobCategory, JobSubCategory, Skill
 
 # Articles landing page
 
@@ -17,7 +17,19 @@ def all_articles(request):
     context = {
         'articles': articles
     }
-    return render(request, 'articles/all_articles.html', context)
+    return render(request, 'articles/articles.html', context)
+
+
+# Articles Tag list view
+
+def article_tag(request, slug):
+    tag = get_object_or_404(Tag, slug=slug)
+    articles = Article.objects.filter(status='published', tags__id=tag.id)
+    context = {
+        'articles': articles
+    }
+    return render(request, 'articles/articles.html', context)
+
 
 # Articles Group list view
 
@@ -26,7 +38,7 @@ def article_group(request, str):
     context = {
         'articles': articles
     }
-    return render(request, 'articles/all_articles.html', context)
+    return render(request, 'articles/articles.html', context)
 
 
 # Single article detail view
@@ -36,11 +48,15 @@ def article(request, group, slug):
     jobs = Job.objects.filter(article_job=article.id)
     job_subcategories = JobSubCategory.objects.filter(article_subcategory=article.id)
     job_categories = JobCategory.objects.filter(article_category=article.id)
+    skills = Skill.objects.filter(article_skills=article.id)
+    tags = Tag.objects.filter(article_tags=article.id)
     context = {
         'article': article,
         'jobs': jobs,
         'job_subcategories': job_subcategories,
-        'job_categories': job_categories
+        'job_categories': job_categories,
+        'skills': skills,
+        'tags': tags
     }
     return render(request, 'articles/article.html', context)
 

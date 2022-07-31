@@ -60,11 +60,31 @@ PIC | {{ article.author }} | {{ article.title }}
         {% endif %}
 
     </section>
+
     <section>
-        Tags go here
+        {% if skills %}
+        <span>
+            <strong>Related Skills:</strong>
+        </span>
+        <div>
+            {% for skill in skills %}
+            <button><em><a href="{{ skill.get_absolute_url }}">{{ skill.name}}</a></em></button>
+            {% endfor %}
+        </div>
+        {% endif %}
     </section>
+
     <section>
-        Skills go here
+        {% if tags %}
+        <span>
+            <strong>Related tags:</strong>
+        </span>
+        <div>
+            {% for tag in tags %}
+            <button><em><a href="{{ tag.get_absolute_url }}">{{ tag.name}}</a></em></button>
+            {% endfor %}
+        </div>
+        {% endif %}
     </section>
     <footer>
         <nav>
