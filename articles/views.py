@@ -3,7 +3,7 @@ from django.shortcuts import get_list_or_404, get_object_or_404, redirect, rende
 
 from .forms import ArticleForm
 from .models import Article, Tag
-from skillsets.models import Job
+from skillsets.models import Job, JobCategory, JobSubCategory
 
 # Articles landing page
 
@@ -33,11 +33,14 @@ def article_group(request, str):
 
 def article(request, group, slug):
     article = get_object_or_404(Article, group=group, slug=slug)
-    jobs = Job.objects.filter(article__id=article.id)
-    print(jobs)
+    jobs = Job.objects.filter(article_job=article.id)
+    job_subcategories = JobSubCategory.objects.filter(article_subcategory=article.id)
+    job_categories = JobCategory.objects.filter(article_category=article.id)
     context = {
         'article': article,
-        'jobs': jobs
+        'jobs': jobs,
+        'job_subcategories': job_subcategories,
+        'job_categories': job_categories
     }
     return render(request, 'articles/article.html', context)
 

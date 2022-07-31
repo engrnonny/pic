@@ -27,18 +27,38 @@ PIC | {{ article.author }} | {{ article.title }}
     </section>
     <section>
         {% if jobs %}
+        <span>
+            <strong>Related Jobs:</strong>
+        </span>
         <div>
             {% for job in jobs %}
-            <span>{{ job.title}}</span>
+            <button><em><a href="{{ job.get_absolute_url }}">{{ job.title}}</a></em></button>
             {% endfor %}
         </div>
         {% endif %}
+
+        {% if job_subcategories %}
+        <span>
+            <strong>Related Jobs subcategories:</strong>
+        </span>
         <div>
-            Jobs subcategory go here
+            {% for subcategory in job_subcategories %}
+            <button><em><a href="{{ subcategory.get_absolute_url }}">{{ subcategory.name}}</a></em></button>
+            {% endfor %}
         </div>
+        {% endif %}
+
+        {% if job_categories %}
+        <span>
+            <strong>Related Job Categories:</strong>
+        </span>
         <div>
-            Jobs category go here
+            {% for category in job_categories %}
+            <button><em><a href="{{ category.get_absolute_url }}">{{ category.name}}</a></em></button>
+            {% endfor %}
         </div>
+        {% endif %}
+
     </section>
     <section>
         Tags go here
