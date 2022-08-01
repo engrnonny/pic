@@ -16,6 +16,6 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='article',
             name='approver',
-            field=models.ForeignKey(default='none', on_delete=django.db.models.deletion.SET_DEFAULT, related_name='approver_user', to=settings.AUTH_USER_MODEL),
+            field=models.ForeignKey(default=1, on_delete=django.db.models.deletion.SET_DEFAULT, related_name='approver_user', to=settings.AUTH_USER_MODEL),
         ),
     ]

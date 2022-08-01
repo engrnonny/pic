@@ -50,6 +50,19 @@
                         Members
                     </a>
                 </span>
+                {% if request.user.is_authenticated %}
+                    <span>
+                        <a href="{% url 'logout' %}">
+                            Logout
+                        </a>
+                    </span>
+                {% else %}
+                    <span>
+                        <a href="{% url 'login' %}">
+                            Login
+                        </a>
+                    </span>
+                {% endif %}
             </nav>
         </header>
         <main>
