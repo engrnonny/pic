@@ -10,6 +10,15 @@ def register(request):
         return render(request, 'users/register.html')
 
 
+# Members login
+
+def login(request):
+    if request.method == 'post':
+        pass
+    else:
+        return render(request, 'users/login.html')
+
+
 # Landing page for all registered members
 
 def members_landing_page(request):

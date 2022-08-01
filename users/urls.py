@@ -3,6 +3,7 @@ from users.views import *
 
 urlpatterns = [
     path('register/', register, name='register'),
+    path('login/', login, name='login'),
     path('', members_landing_page, name='members-landing-page'),
 ]
     # path('<slug:slug>/', user_profile, name='user-profile'),

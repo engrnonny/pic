@@ -8,6 +8,7 @@ urlpatterns = [
     path('tag/<slug:slug>/', article_tag, name='tag'),
     path('<str>/', article_group, name='article-group'),
     path('<str:group>/<slug:slug>/', article, name='article'),
+    path('<str:group>/<slug:slug>/l/', like_unlike_article, name='like-unlike-article'),
 ]
 
 # urlpatterns = [

@@ -4,6 +4,7 @@ from django.shortcuts import get_list_or_404, get_object_or_404, redirect, rende
 from .forms import ArticleForm
 from .models import Article, Tag
 from skillsets.models import Job, JobCategory, JobSubCategory, Skill
+from users.models import User
 
 # Articles landing page
 
@@ -59,6 +60,20 @@ def article(request, group, slug):
         'tags': tags
     }
     return render(request, 'articles/article.html', context)
+
+
+# Like and unlike article
+
+@login_required
+def like_unlike_article(request, group, slug):
+    article = get_object_or_404(Article, group=group, slug=slug)
+    user = request.user
+    user_liked_article = User.objects.filter(user_likes=article.id, id=user.id)
+    if user_liked_article:
+        article.likes.remove(user)
+    else:
+        article.likes.add(user)
+    return redirect(article)
 
 
 # Create new article
