@@ -25,7 +25,7 @@ class UserProfileTest(TestCase):
 
     def test_get(self):
         response = self.client.get(reverse('user-profile'))
-        self.assertRedirects(response, '/users/login/?next=/users/profile/', status_code=302,
+        self.assertRedirects(response, '/users/login/?next=/users/profile/', status_code=301,
         target_status_code=200, fetch_redirect_response=True)
 
 class MembersLandingPageTest(TestCase):

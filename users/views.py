@@ -4,6 +4,12 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_list_or_404, get_object_or_404, redirect, render
 from django.urls import reverse
 
+from .forms import ReviewForm
+from articles.models import Article
+
+review_objects = {
+    'Article': Article
+}
 
 # Users registration
 
@@ -62,3 +68,22 @@ def user_profile(request):
 
 def members_landing_page(request):
     return render(request, 'users/members_landing_page.html')
+
+
+# Create new review
+
+@login_required
+def new_review(request, objectmodel, objectid):
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
+        if form.is_valid():
+            new_review = form.save(commit=False)
+            new_review.reviewer = request.user
+            if objectmodel == 'Article':
+                article = Article.objects.get(id=objectid)
+                new_review.article = article
+                new_review.save()
+                return redirect(article)
+
+        else:
+            print('not valid')

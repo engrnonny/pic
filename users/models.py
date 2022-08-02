@@ -1,11 +1,12 @@
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
-from skillsets.models import JobCategory, JobSubCategory, Job, Skill
 from django.urls import reverse
 from django.utils.text import slugify
 
-# Create your models here.
+from skillsets.models import JobCategory, JobSubCategory, Job, Skill
+# from articles.models import Article
 
 
 class User(AbstractUser):
@@ -178,19 +179,13 @@ class Association(models.Model):
 
 
 class Review(models.Model):
-    object_name = models.CharField(
-        max_length=255, verbose_name='name of model object')
-    object_model = models.CharField(
-        max_length=128, verbose_name='name of the model')
-    object_id = models.PositiveIntegerField(
-        verbose_name='id of the model object')
-    rating = models.PositiveSmallIntegerField(default=0)
+    article = models.ForeignKey('articles.Article', on_delete=models.CASCADE, blank=True, null=True)
+    rating = models.PositiveSmallIntegerField(validators=[MaxValueValidator(5), MinValueValidator(1)])
     comment = models.TextField(blank=True, default='')
-    reviewer = models.ForeignKey(
-        User, default='Anonymous', on_delete=models.SET_DEFAULT)
+    reviewer = models.ForeignKey(User, default='Anonymous', on_delete=models.SET_DEFAULT)
     anonymous = models.BooleanField(default=False)
     created_on = models.DateTimeField(auto_now_add=True)
     modified_on = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return '%s' % (self.name)
+        return '%s' % (self.article)

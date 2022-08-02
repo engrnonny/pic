@@ -100,7 +100,35 @@ PIC | {{ article.author }} | {{ article.title }}
         <span>
             {{ article.views }} views
         </span>
-        comments, share buttons go here
+        <section>
+            <div>
+                {% for comment in comments %}
+                    <blockquote>
+                        <div>
+                            {{ comment.comment }}
+                        </div>
+                        <strong>
+                            {% if comment.anonymous == False %}
+                                <strong>{{ comment.reviewer.username }}</strong>
+                            {% else %}
+                                <strong>
+                                    Anonymous
+                                </strong>
+                            {% endif %}
+                            <p>Posted on: {{ comment.created_on }}</p>
+                    </blockquote>
+                {% endfor %}
+            </div>
+            <div>
+                <form action="{% url 'new-review' 'Article' article.id %}" method="POST">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" value="Post Comment">
+                </form>
+            </div>
+        </section>
+        comments,
+        share buttons go here
         <nav>
         </nav>
     </footer>

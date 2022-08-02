@@ -7,6 +7,7 @@ urlpatterns = [
     path('logout/', logout_view, name='logout'),
     path('profile/', user_profile, name='user-profile'),
     path('', members_landing_page, name='members-landing-page'),
+    path('review/<objectmodel><objectid>/', new_review, name='new-review'),
 
 ]
     # path('<slug:slug>/', user_profile, name='user-profile'),

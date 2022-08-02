@@ -2,9 +2,10 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_list_or_404, get_object_or_404, redirect, render
 
 from .forms import ArticleForm
+from users.forms import ReviewForm
 from .models import Article, Tag
 from skillsets.models import Job, JobCategory, JobSubCategory, Skill
-from users.models import User
+from users.models import User, Review
 
 # Articles landing page
 
@@ -51,8 +52,11 @@ def article(request, group, slug):
     job_categories = JobCategory.objects.filter(article_category=article.id)
     skills = Skill.objects.filter(article_skills=article.id)
     tags = Tag.objects.filter(article_tags=article.id)
+    comments = Review.objects.filter(article=article).order_by('-created_on')
     context = {
         'article': article,
+        'comments': comments,
+        'form': ReviewForm(),
         'jobs': jobs,
         'job_subcategories': job_subcategories,
         'job_categories': job_categories,
