@@ -52,13 +52,13 @@
                 </span>
                 {% if request.user.is_authenticated %}
                     <span>
-                        <a href="{% url 'logout' %}">
+                        <a href="{% url 'logout' %}?next={{ request.path | urlencode}}">
                             Logout
                         </a>
                     </span>
                 {% else %}
                     <span>
-                        <a href="{% url 'login' %}">
+                        <a href="{% url 'login' %}?next={{ request.path | urlencode}}">
                             Login
                         </a>
                     </span>

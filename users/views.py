@@ -18,6 +18,7 @@ def register(request):
 def login_view(request):
     if request.user.is_authenticated:
         return redirect('user-profile')
+
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -25,7 +26,6 @@ def login_view(request):
         if user is not None:
             login(request, user)
             next_param = request.POST.get('next')
-            print(next_param)
             if next_param:
                 url = next_param
             else:
@@ -34,7 +34,6 @@ def login_view(request):
 
         else:
             messages.add_message(request, messages.ERROR, 'Login failed')
-            print(2)
     return render(request, 'users/login.html')
 
 
@@ -42,7 +41,12 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return redirect('index')
+    next_param = request.GET.get('next')
+    if next_param:
+        url = next_param
+    else:
+        url = reverse('index')
+    return redirect(url)
 
 
 # Logged in user profile page
