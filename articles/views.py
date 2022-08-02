@@ -81,6 +81,7 @@ def like_unlike_article(request, group, slug):
 
 
 # Create new article
+
 @login_required
 def new_article(request):
     if request.user.author == False:
@@ -103,8 +104,9 @@ def new_article(request):
         return render(request, 'articles/new_article.html', context)
 
 
-# Create new article
+# Edit existing article
 
+@login_required
 def edit_article(request):
     if request.method == 'POST':
         form = ArticleForm(request.POST)
