@@ -1,5 +1,6 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_list_or_404, get_object_or_404, redirect, render
 from django.urls import reverse
 
@@ -39,9 +40,10 @@ def login_view(request):
 
 # Members logout
 
+@login_required
 def logout_view(request):
     logout(request)
-    next_param = request.GET.get('next')
+    next_param = request.POST.get('next')
     if next_param:
         url = next_param
     else:
@@ -51,17 +53,12 @@ def logout_view(request):
 
 # Logged in user profile page
 
+@login_required
 def user_profile(request):
-    if request.user.is_authenticated:
-        return render(request, 'users/user_profile.html')
-    else:
-        return redirect('login')
+    return render(request, 'users/user_profile.html')
 
 
 # Landing page for all registered members
 
 def members_landing_page(request):
-    if request.method == 'post':
-        pass
-    else:
-        return render(request, 'users/register.html')
+    return render(request, 'users/members_landing_page.html')
