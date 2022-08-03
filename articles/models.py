@@ -29,7 +29,7 @@ def get_upload_path(self, filename):
 class Article(models.Model):
 
     GROUP_CHOICES = [
-        ('general', 'General Information'),
+        ('general', 'General'),
         ('interviews', 'Interviews'),
         ('news', 'News'),
     ]

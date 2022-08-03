@@ -1,6 +1,6 @@
 from django.db import models
 from users.models import User, Company
-from skillsets.models import *
+from skillsets.models import Skill, JobCategory, JobSubCategory, Job
 from django.utils.text import slugify
 
 
@@ -10,8 +10,9 @@ class Ad(models.Model):
     job_category = models.ManyToManyField(JobCategory, related_name='ad_model_job_category', blank=True)
     job_subcategory = models.ManyToManyField(JobSubCategory, related_name='ad_model_job_subcategory', blank=True)
     job = models.ManyToManyField(Job, related_name='ad_model_job', blank=True)
+    skills = models.ManyToManyField(Skill, related_name='ad_model_skills', blank=True)
     video_link = models.URLField(blank=True, default='')
-    advertizer = models.ForeignKey(User, on_delete=models.CASCADE)
+    advertizer = models.ForeignKey(User, on_delete=models.CASCADE, related_name='advertizer_user')
     related_company = models.ManyToManyField(Company, related_name='related_company', blank=True)
     active = models.BooleanField(default=False)
     link = models.URLField(blank=True, default='')

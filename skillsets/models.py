@@ -24,7 +24,7 @@ class Skill(models.Model):
 
 class JobCategory(models.Model):
     name = models.CharField(max_length=128, unique=True)
-    description = models.TextField(blank=True, null=True)
+    description = models.TextField()
     skills = models.ManyToManyField(Skill, blank=True)
     outlook_details = models.TextField(blank=True, null=True)
     outlook_summary = models.CharField(max_length=32, blank=True, null=True)
@@ -78,7 +78,7 @@ class JobSubCategory(models.Model):
 class Job(models.Model):
     title = models.CharField(max_length=255, unique=True)
     description = models.TextField()
-    sub_category = models.ForeignKey(JobSubCategory, on_delete=models.PROTECT)
+    subcategory = models.ForeignKey(JobSubCategory, on_delete=models.PROTECT, related_name="job_sub_category", blank=True, null=True)
     roles = models.TextField(blank=True, default='')
     skills = models.ManyToManyField(Skill, blank=True)
     outlook_details = models.TextField(blank=True, null=True)

@@ -75,7 +75,7 @@ class User(AbstractUser):
         return super().save(*args, **kwargs)
 
 class Company(models.Model):
-    name = models.CharField(max_length=255, default='')
+    name = models.CharField(max_length=255)
     bio = models.TextField()
     registration_no = models.CharField(
         max_length=255, blank=True, null=True, unique=True)
@@ -90,7 +90,7 @@ class Company(models.Model):
     employees = models.PositiveIntegerField(blank=True, null=True)
     employee_users = models.ManyToManyField(
         User, related_name='registered_users')
-    rating = models.PositiveSmallIntegerField(default=0)
+    rating = models.PositiveSmallIntegerField(blank=True, null=True)
     slug = models.SlugField(blank=True, unique=True)
     creator = models.ForeignKey(
         User, default='Unknown', on_delete=models.SET_DEFAULT)
