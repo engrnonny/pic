@@ -49,7 +49,7 @@ class User(AbstractUser):
     title = models.CharField(max_length=6, choices=TITLE_CHOICES, blank=True, default='')
     phone_no = models.CharField(max_length=11, unique=True)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
-    birthday = models.DateField()
+    birthday = models.DateField(blank=True, null=True)
     address = models.CharField(max_length=255, blank=True, default='')
     city = models.CharField(max_length=32)
     lga = models.CharField(max_length=32, blank=True, default='')
