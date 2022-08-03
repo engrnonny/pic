@@ -37,7 +37,7 @@ class ArticleModelTestCase(TestCase):
             name="Tag One"
             )
 
-        tag_2 = Company.objects.create(
+        tag_2 = Tag.objects.create(
             name="Tag Two"
             )
 
@@ -98,7 +98,7 @@ class ArticleModelTestCase(TestCase):
         article_1 = Article.objects.create(
             title="Article One",
             main_paragraph="This is the main paragraph",
-            body="This is the main paragraph",
+            body="This is the main body",
             group="General",
             author=self.user,
             status="published",
@@ -137,8 +137,8 @@ class ArticleModelTestCase(TestCase):
         article_2 = Article.objects.create(
             title="Article Two",
             main_paragraph="This is the main paragraph",
-            body="This is the main paragraph",
-            group="General",
+            body="This is the main body",
+            group="general",
             author=self.user,
             status="published",
             approver=self.user,
@@ -150,26 +150,41 @@ class ArticleModelTestCase(TestCase):
 
     def test_tag_object_created(self):
         tag_1 = Tag.objects.get(name="Tag One")
-        self.assertEqual(tag_1.title, 'Tag One')
+        self.assertEqual(tag_1.name, 'Tag One')
         self.assertEqual(tag_1.slug, 'tag-one')
 
     def test_tag_reverse_query(self):
         tag_1 = Tag.objects.get(name="Tag One")
-        self.assertEqual(Article.objects.filter(article_tags=tag_1.id).count(), 2)
+        self.assertEqual(Article.objects.filter(tags=tag_1.id).count(), 2)
 
 
-    def test_tag_object_created(self):
-        Article_1 = Article.objects.get(name="Article One")
-        self.assertEqual(Article_1.message, 'This is a test message')
-        self.assertEqual(Article_1.job_category.count(), 2)
-        self.assertEqual(Article_1.job_subcategory.count(), 2)
-        self.assertEqual(Article_1.job.count(), 2)
-        # self.assertEqual(ad_1.video_link, '')
-        self.assertEqual(Article_1.advertizer, self.user)
-        self.assertEqual(Article_1.related_company.count(), 2)
-        self.assertEqual(Article_1.active, False)
-        self.assertEqual(Article_1.slug, 'indomie-main-advert')
-        self.assertEqual(Article_1.get_absolute_url(), '/ads/indomie-main-advert/')
-
-    def test_advertizer_ads_count(self):
-        self.assertEqual(self.user.advertizer_user.count(), 2)
+    def test_Article_object_created(self):
+        article_1 = Article.objects.get(title="Article One")
+        self.assertEqual(article_1.title, 'Article One')
+        self.assertEqual(article_1.main_paragraph, 'This is the main paragraph')
+        self.assertEqual(article_1.body, 'This is the main body')
+        self.assertEqual(article_1.group, 'general')
+        # self.assertEqual(article_1.video_link, '')
+        self.assertEqual(article_1.category.count(), 2)
+        self.assertEqual(article_1.subcategory.count(), 2)
+        self.assertEqual(article_1.job.count(), 2)
+        self.assertEqual(article_1.skills.count(), 2)
+        self.assertEqual(article_1.tags.count(), 2)
+        # self.assertEqual(article_1.image_0, '')
+        # self.assertEqual(article_1.image_1, '')
+        # self.assertEqual(article_1.image_2, '')
+        # self.assertEqual(article_1.image_3, '')
+        # self.assertEqual(article_1.image_4, '')
+        # self.assertEqual(article_1.image_5, '')
+        # self.assertEqual(article_1.image_6, '')
+        # self.assertEqual(article_1.image_7, '')
+        # self.assertEqual(article_1.image_8, '')
+        # self.assertEqual(article_1.image_9, '')
+        self.assertEqual(article_1.author, self.user)
+        self.assertEqual(article_1.status, 'published')
+        self.assertEqual(article_1.approver, self.user)
+        self.assertEqual(article_1.slug, 'article-one')
+        self.assertEqual(article_1.likes.count(), 2)
+        self.assertEqual(article_1.read.count(), 2)
+        self.assertEqual(article_1.views.count(), 2)
+        self.assertEqual(article_1.get_absolute_url(), '/article-one/')
