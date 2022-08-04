@@ -10,6 +10,6 @@ expect "Password: " { send "Tri3nity.\r" }
 
 git add *
 
-git commit -m "Home - HP1 - Still working on Articles tests"
+git commit -m "Home - HP1 - Still working on Articles tests - 2"
 
 git push

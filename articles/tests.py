@@ -24,9 +24,6 @@ class ArticleTest(TestCase):
             country='test'
             )
 
-
-        login = self.client.login(username='testuser_1', password='27euyayg78q8dgoyo')
-
         user_2 = User.objects.create_user(
             username='testuser_2',
             password='27euyayg78q8dgoyo',
@@ -106,7 +103,7 @@ class ArticleTest(TestCase):
             title="Article One",
             main_paragraph="This is the main paragraph",
             body="This is the main body",
-            group="General",
+            group="general",
             author=self.user,
             status="published",
             approver=self.user,
@@ -171,7 +168,7 @@ class ArticleTest(TestCase):
         self.assertEqual(article_1.title, 'Article One')
         self.assertEqual(article_1.main_paragraph, 'This is the main paragraph')
         self.assertEqual(article_1.body, 'This is the main body')
-        self.assertEqual(article_1.group, 'General')
+        self.assertEqual(article_1.group, 'general')
         # self.assertEqual(article_1.video_link, '')
         self.assertEqual(article_1.category.count(), 2)
         self.assertEqual(article_1.subcategory.count(), 2)
@@ -194,11 +191,11 @@ class ArticleTest(TestCase):
         self.assertEqual(article_1.slug, 'article-one')
         self.assertEqual(article_1.likes.count(), 2)
         self.assertEqual(article_1.read.count(), 2)
-        self.assertEqual(article_1.views.count(), 2)
-        self.assertEqual(article_1.get_absolute_url(), '/article-one/')
+        self.assertEqual(article_1.views, 6)
+        self.assertEqual(article_1.get_absolute_url(), '/articles/general/article-one/')
+
 
         # Testing Views logic
-
 
     def test_get_articles_landing_page(self):
         response = self.client.get(reverse('articles-landing-page'))
@@ -208,7 +205,7 @@ class ArticleTest(TestCase):
     def test_get_all_articles(self):
         response = self.client.get(reverse('all-articles'))
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.context['articles'].count(), 2)
+        self.assertEqual(len(response.context['articles']), 2)
         self.assertTemplateUsed(response, 'articles/articles.html')
 
     def test_get_articles_by_tag(self):
@@ -219,7 +216,7 @@ class ArticleTest(TestCase):
         self.assertTemplateUsed(response, 'articles/articles.html')
 
     def test_get_articles_by_group(self):
-        response = self.client.get(reverse('article-group', args=('general')))
+        response = self.client.get(reverse('article-group', args=['general']))
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context['articles'].count(), 2)
         self.assertTemplateUsed(response, 'articles/articles.html')
@@ -227,7 +224,7 @@ class ArticleTest(TestCase):
     def test_get_single_article(self):
         article_1 = Article.objects.get(title="Article One")
         response = self.client.get(reverse('article', kwargs={
-            'str': article_1.group,
+            'group': article_1.group,
             'slug': article_1.slug
             }))
         self.assertEqual(response.status_code, 200)
@@ -240,6 +237,7 @@ class ArticleTest(TestCase):
         self.assertTemplateUsed(response, 'articles/article.html')
 
     def test_like_unlike_article(self):
+        self.client.login(username=self.user.username, password='27euyayg78q8dgoyo')
         article_1 = Article.objects.get(title="Article One")
         response = self.client.get(reverse('like-unlike-article', kwargs={
             'group': article_1.group,
@@ -252,6 +250,7 @@ class ArticleTest(TestCase):
         self.assertTemplateUsed(response, 'articles/article.html')
 
     def test_get_new_article(self):
+        login = self.client.login(username=self.user.username, password='27euyayg78q8dgoyo')
         response = self.client.get(reverse('new-article'))
         self.assertEqual(response.status_code, 200)
         # self.assertTemplateUsed(response, 'articles/new_article.html')
