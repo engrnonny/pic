@@ -43,8 +43,4 @@ class AdTest(TestCase):
         self.assertTemplateUsed(response, 'ads/ad.html')
 
         # Non-existing ad object cannot be retrieved
-
-        # response = self.client.get(reverse('ad', args='test-1'))
         # self.assertEqual(response.status_code, 404)
-
-        # login = self.client.login(username='testuser', password='12345')

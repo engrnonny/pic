@@ -106,20 +106,20 @@ def new_article(request):
 
 # Edit existing article
 
-@login_required
-def edit_article(request):
-    if request.method == 'POST':
-        form = ArticleForm(request.POST)
-        if form.is_valid():
-            new_article = form.save(commit=False)
-            new_article.author = request.user
-            new_article.save()
-            return redirect(new_article)
-        else:
-            pass
-    else:
-        form = ArticleForm()
-        context = {
-            'form': form
-        }
-        return render(request, 'articles/new_article.html', context)
+# @login_required
+# def edit_article(request):
+#     if request.method == 'POST':
+#         form = ArticleForm(request.POST)
+#         if form.is_valid():
+#             new_article = form.save(commit=False)
+#             new_article.author = request.user
+#             new_article.save()
+#             return redirect(new_article)
+#         else:
+#             pass
+#     else:
+#         form = ArticleForm()
+#         context = {
+#             'form': form
+#         }
+#         return render(request, 'articles/new_article.html', context)

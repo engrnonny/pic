@@ -1,11 +1,15 @@
-from django.test import TestCase
+from django.test import Client, TestCase
+from django.shortcuts import reverse
 
-from .models import Article, Tag
-from skillsets.models import Skill, JobCategory, JobSubCategory, Job
-from users.models import User, Company
+from articles.models import Tag, Article
+from skillsets.models import JobCategory, JobSubCategory, Job, Skill
+from users.models import User
 
-class ArticleModelTestCase(TestCase):
+
+
+class ArticleTest(TestCase):
     def setUp(self):
+        self.client = Client()
 
         # Creating User objects
 
@@ -19,6 +23,9 @@ class ArticleModelTestCase(TestCase):
             state='test',
             country='test'
             )
+
+
+        login = self.client.login(username='testuser_1', password='27euyayg78q8dgoyo')
 
         user_2 = User.objects.create_user(
             username='testuser_2',
@@ -148,6 +155,8 @@ class ArticleModelTestCase(TestCase):
         article_2.save()
 
 
+    # Testing Models logic
+
     def test_tag_object_created(self):
         tag_1 = Tag.objects.get(name="Tag One")
         self.assertEqual(tag_1.name, 'Tag One')
@@ -157,13 +166,12 @@ class ArticleModelTestCase(TestCase):
         tag_1 = Tag.objects.get(name="Tag One")
         self.assertEqual(Article.objects.filter(tags=tag_1.id).count(), 2)
 
-
     def test_Article_object_created(self):
         article_1 = Article.objects.get(title="Article One")
         self.assertEqual(article_1.title, 'Article One')
         self.assertEqual(article_1.main_paragraph, 'This is the main paragraph')
         self.assertEqual(article_1.body, 'This is the main body')
-        self.assertEqual(article_1.group, 'general')
+        self.assertEqual(article_1.group, 'General')
         # self.assertEqual(article_1.video_link, '')
         self.assertEqual(article_1.category.count(), 2)
         self.assertEqual(article_1.subcategory.count(), 2)
@@ -188,3 +196,67 @@ class ArticleModelTestCase(TestCase):
         self.assertEqual(article_1.read.count(), 2)
         self.assertEqual(article_1.views.count(), 2)
         self.assertEqual(article_1.get_absolute_url(), '/article-one/')
+
+        # Testing Views logic
+
+
+    def test_get_articles_landing_page(self):
+        response = self.client.get(reverse('articles-landing-page'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'articles/articles_landing_page.html')
+
+    def test_get_all_articles(self):
+        response = self.client.get(reverse('all-articles'))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['articles'].count(), 2)
+        self.assertTemplateUsed(response, 'articles/articles.html')
+
+    def test_get_articles_by_tag(self):
+        tag_1 = Tag.objects.get(name="Tag One")
+        response = self.client.get(reverse('tag', kwargs={'slug': tag_1.slug}))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['articles'].count(), 2)
+        self.assertTemplateUsed(response, 'articles/articles.html')
+
+    def test_get_articles_by_group(self):
+        response = self.client.get(reverse('article-group', args=('general')))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['articles'].count(), 2)
+        self.assertTemplateUsed(response, 'articles/articles.html')
+
+    def test_get_single_article(self):
+        article_1 = Article.objects.get(title="Article One")
+        response = self.client.get(reverse('article', kwargs={
+            'str': article_1.group,
+            'slug': article_1.slug
+            }))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['article'].title, 'Article One')
+        self.assertEqual(response.context['jobs'].count(), 2)
+        self.assertEqual(response.context['job_subcategories'].count(), 2)
+        self.assertEqual(response.context['job_categories'].count(), 2)
+        self.assertEqual(response.context['skills'].count(), 2)
+        self.assertEqual(response.context['tags'].count(), 2)
+        self.assertTemplateUsed(response, 'articles/article.html')
+
+    def test_like_unlike_article(self):
+        article_1 = Article.objects.get(title="Article One")
+        response = self.client.get(reverse('like-unlike-article', kwargs={
+            'group': article_1.group,
+            'slug': article_1.slug
+            }))
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.context['article'].likes.count(), 1)
+        self.assertRedirects(response, 'article', status_code=200,
+        target_status_code=200, fetch_redirect_response=True)
+        self.assertTemplateUsed(response, 'articles/article.html')
+
+    def test_get_new_article(self):
+        response = self.client.get(reverse('new-article'))
+        self.assertEqual(response.status_code, 200)
+        # self.assertTemplateUsed(response, 'articles/new_article.html')
+
+    # def test_get_edit_article(self):
+    #     response = self.client.get(reverse('ads'))
+    #     self.assertEqual(response.status_code, 200)
+    #     self.assertTemplateUsed(response, 'articles/new_article.html')

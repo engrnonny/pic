@@ -10,6 +10,6 @@ expect "Password: " { send "Tri3nity.\r" }
 
 git add *
 
-git commit -m "Home - HP1 - Created bash files to automate beginning and ending a session"
+git commit -m "Home - HP1 - Still working on Articles tests"
 
 git push
