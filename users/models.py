@@ -23,9 +23,9 @@ class User(AbstractUser):
     ]
 
     AUTHOR_STATUS_CHOICES = [
-        ('N', 'NO'),
-        ('P', 'PENDING'),
-        ('Y', 'YES'),
+        ('No', 'No'),
+        ('Pending', 'Pending'),
+        ('Yes', 'Yes'),
     ]
 
     STATE_CHOICES = [
@@ -59,7 +59,7 @@ class User(AbstractUser):
     profile_pic = models.ImageField(blank=True, null=True, upload_to="main/users/profile-pics")
     linkedin = models.URLField(blank=True, null=True, unique=True)
     slug = models.SlugField(unique=True, blank=True)
-    author = models.CharField(max_length=1, choices=AUTHOR_STATUS_CHOICES, default='N')
+    author = models.CharField(max_length=7, choices=AUTHOR_STATUS_CHOICES, default='No')
     created_on = models.DateTimeField(auto_now_add=True)
     modified_on = models.DateTimeField(auto_now=True)
 

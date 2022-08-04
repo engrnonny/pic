@@ -94,7 +94,7 @@ class Job(models.Model):
     def get_absolute_url(self):
         return reverse('job', kwargs={
             'category': self.subcategory.category.slug,
-            'subcategory': self.sub_category.slug,
+            'subcategory': self.subcategory.slug,
             'slug': self.slug
         })
 

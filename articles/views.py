@@ -77,6 +77,7 @@ def like_unlike_article(request, group, slug):
         article.likes.remove(user)
     else:
         article.likes.add(user)
+    print(request)
     return redirect(article)
 
 
@@ -84,17 +85,16 @@ def like_unlike_article(request, group, slug):
 
 @login_required
 def new_article(request):
-    if request.user.author == False:
+    if request.user.author == "No":
         return redirect('register')
-
-    if request.method == 'POST':
-        form = ArticleForm(request.POST)
-        if form.is_valid():
-            new_article = form.save(commit=False)
-            new_article.author = request.user
-            new_article.save()
-            # Message: You're not registered as an author. Please registered to continue.
-            return redirect(new_article)
+    elif request.method == 'POST':
+            form = ArticleForm(request.POST)
+            if form.is_valid():
+                new_article = form.save(commit=False)
+                new_article.author = request.user
+                new_article.save()
+                # Message: You're not registered as an author. Please registered to continue.
+                return redirect(new_article)
 
     else:
         form = ArticleForm()
