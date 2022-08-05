@@ -52,7 +52,7 @@ def article(request, group, slug):
     job_categories = JobCategory.objects.filter(article_category=article.id)
     skills = Skill.objects.filter(article_skills=article.id)
     tags = Tag.objects.filter(article_tags=article.id)
-    comments = Review.objects.filter(article=article).order_by('-created_on')
+    comments = Review.objects.filter(article=article).order_by('created_on')
     context = {
         'article': article,
         'comments': comments,

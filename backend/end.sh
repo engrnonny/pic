@@ -1,6 +1,6 @@
 #!/usr/bin/expect
 
-python manage.py makemigrations
+# python manage.py makemigrations
 
 # python manage.py migrate
 
@@ -8,8 +8,8 @@ python manage.py makemigrations
 
 # expect "Password: " { send "Tri3nity.\r" }
 
-# git add *
+git add *
 
-# git commit -m "Home - HP1 - Finshed Articles test"
+git commit -m "Office - Dell - Still learning docker"
 
-# git push
+git push

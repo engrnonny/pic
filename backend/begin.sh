@@ -1,13 +1,13 @@
-#!/usr/bin/expect
+!/usr/bin/expect
 
-env/Scripts/activate
+source env/Scripts/activate
 
-git pull
+# git pull
 
-pg_restore -h localhost -p 5432 -U postgres -d old_db -v
-backup_db
+# pg_restore -h localhost -p 5432 -U postgres -d old_db -v
+# backup_db
 
-expect "Password: " { send "Tri3nity.\r" }
+# expect "Password: " { send "Tri3nity.\r" }
 
 python manage.py makemigrations
 

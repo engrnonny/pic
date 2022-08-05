@@ -86,7 +86,7 @@ PIC | {{ article.author }} | {{ article.title }}
         </div>
         {% endif %}
     </section>
-    <footer>
+    <section>
         <span>
             {{ article.likes.all|length }}
             <a href="{% url 'like-unlike-article' article.group article.slug %}">
@@ -128,20 +128,42 @@ PIC | {{ article.author }} | {{ article.title }}
             </div>
         </section>
         <section>
-            share buttons go here
         </section>
         <nav>
+            share buttons go here
         </nav>
-    </footer>
-</article>
-<footer>
-    <section>
-        <span>
-            <button>Previous</button>
-        </span>
-        <span>
-            <button>Next</button>
-        </span>
     </section>
+</article>
+<section>
+    <span>
+        <button>Previous</button>
+    </span>
+    <span>
+        <button>Next</button>
+    </span>
+</section>
+<section>
+    Recommended articles.
+</section>
+<footer>
+    <span>
+        {{ article.likes.all|length }}
+        <a href="{% url 'like-unlike-article' article.group article.slug %}">
+            {% if request.user in article.likes.all %}
+                Unlike
+            {% else %}
+                Like
+            {% endif %}
+        </a>
+    </span>
+    <span>
+        {{ article.views }} views
+    </span>
+    <span>
+        {{ comments.all|length }} comments
+    </span>
+    <span>
+        Share
+    </span>
 </footer>
 {% endblock %}
