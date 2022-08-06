@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'rest_framework',
+
     'ads',
     'apps',
     'articles',
@@ -81,7 +84,7 @@ WSGI_APPLICATION = 'pic.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-# """
+"""
 # SQlite
 DATABASES = {
     'default': {
@@ -101,7 +104,7 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-"""
+# """
 
 AUTH_USER_MODEL = "users.User"
 
@@ -163,3 +166,11 @@ MEDIA_URL = 'media/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = '/users/login'
+
+REST_FRAMEWORK = {
+    # Use Django's standard `django.contrib.auth` permissions,
+    # or allow read-only access for unauthenticated users.
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}

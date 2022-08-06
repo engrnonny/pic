@@ -1,4 +1,7 @@
 {
+    "python.autoComplete.extraPaths": [
+        "../"
+    ],
     "cSpell.words": [
         "picdb"
     ]
