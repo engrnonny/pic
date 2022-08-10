@@ -5,7 +5,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 
-from skillsets.models import JobCategory, JobSubCategory, Job, Skill
+from skillsets.models import JobCategory, JobSubCategory, Job, Skill, Level
 # from articles.models import Article
 
 
@@ -115,11 +115,11 @@ class Company(models.Model):
 class UserWorkProfile(models.Model):
     user = models.ForeignKey(User, default='Unknown', on_delete=models.CASCADE)
     job = models.ForeignKey(Job, default='Unknown', on_delete=models.PROTECT)
-    level = models.CharField(max_length=64)
+    level = models.ForeignKey(Level, on_delete=models.PROTECT, blank=True)
     employment_type = models.CharField(max_length=12, blank=True, default='')
     description = models.TextField(blank=True, default='')
-    company = models.ForeignKey(
-        Company, blank=True, default='', on_delete=models.PROTECT)
+    monthly_salary = models.PositiveBigIntegerField(blank=True, default='')
+    company = models.ForeignKey(Company, blank=True, default='', on_delete=models.PROTECT)
     address = models.CharField(max_length=255, blank=True, default='')
     city = models.CharField(max_length=32, blank=True, default='')
     lga = models.CharField(max_length=32, blank=True, default='')
@@ -179,7 +179,14 @@ class Association(models.Model):
 
 
 class Review(models.Model):
-    article = models.ForeignKey('articles.Article', on_delete=models.CASCADE, blank=True, null=True)
+    article = models.ForeignKey('articles.Article', related_name='article_review', on_delete=models.CASCADE, blank=True, null=True)
+    job_category = models.ForeignKey(JobCategory, related_name='job_category_review', on_delete=models.CASCADE, blank=True, null=True)
+    job_subcategory = models.ForeignKey(JobSubCategory, related_name='job_subcategory_review', on_delete=models.CASCADE, blank=True, null=True)
+    job = models.ForeignKey(Job, related_name='job_review', on_delete=models.CASCADE, blank=True, null=True)
+    level = models.ForeignKey(Level, related_name='level_review', on_delete=models.CASCADE, blank=True, null=True)
+    skill = models.ForeignKey(Skill, related_name='skill_review', on_delete=models.CASCADE, blank=True, null=True)
+    company = models.ForeignKey(Company, related_name='company_review', on_delete=models.CASCADE, blank=True, null=True)
+    association = models.ForeignKey(Association, related_name='association_review', on_delete=models.CASCADE, blank=True, null=True)
     rating = models.PositiveSmallIntegerField(validators=[MaxValueValidator(5), MinValueValidator(1)])
     comment = models.TextField(blank=True, default='')
     reviewer = models.ForeignKey(User, default='Anonymous', on_delete=models.SET_DEFAULT)
