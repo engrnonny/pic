@@ -5,7 +5,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 
-from education.models import Institution, Course
+from education.models import Course
 from skillsets.models import JobCategory, JobSubCategory, Job, Skill, Level
 # from articles.models import Article
 
@@ -81,6 +81,9 @@ class Company(models.Model):
     registration_no = models.CharField(
         max_length=255, blank=True, null=True, unique=True)
     registration_date = models.DateField(null=True, blank=True)
+    job_category = models.ManyToManyField(JobCategory, related_name='company_job_category', blank=True)
+    job_subcategory = models.ManyToManyField(JobSubCategory, related_name='company_job_subcategory', blank=True)
+    job = models.ManyToManyField(Job, related_name='company_job', blank=True)
     email = models.EmailField(unique=True, blank=True, null=True)
     phone = models.CharField(max_length=11, blank=True, default='')
     address = models.CharField(max_length=255, blank=True, default='')
@@ -89,12 +92,10 @@ class Company(models.Model):
     state = models.CharField(max_length=32, blank=True, default='')
     country = models.CharField(max_length=32, blank=True, default='')
     employees = models.PositiveIntegerField(blank=True, null=True)
-    employee_users = models.ManyToManyField(
-        User, related_name='registered_users')
+    employee_users = models.ManyToManyField(User, related_name='registered_users')
     rating = models.PositiveSmallIntegerField(blank=True, null=True)
     slug = models.SlugField(blank=True, unique=True)
-    creator = models.ForeignKey(
-        User, default='Unknown', on_delete=models.SET_DEFAULT)
+    creator = models.ForeignKey(User, default='Unknown', on_delete=models.SET_DEFAULT)
     verified = models.BooleanField(default=False)
     created_on = models.DateTimeField(auto_now_add=True)
     modified_on = models.DateTimeField(auto_now=True)
@@ -140,10 +141,10 @@ class UserWorkProfile(models.Model):
 
 class UserQualification(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    institution = models.ForeignKey(Institution, relates_name='user_qualification_institute', on_delete=models.RESTRICT, blank=True)
     course = models.ForeignKey(Course, relates_name='user_qualification_course', on_delete=models.RESTRICT, blank=True)
     started = models.DateField(blank=True, null=True)
     ended = models.DateField(blank=True, null=True)
+    verified = models.BooleanField(default=False)
     created_on = models.DateTimeField(auto_now_add=True)
     modified_on = models.DateTimeField(auto_now=True)
 
