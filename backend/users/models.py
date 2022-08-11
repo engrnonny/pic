@@ -5,6 +5,7 @@ from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 
+from education.models import Institution, Course
 from skillsets.models import JobCategory, JobSubCategory, Job, Skill, Level
 # from articles.models import Article
 
@@ -139,6 +140,10 @@ class UserWorkProfile(models.Model):
 
 class UserQualification(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    institution = models.ForeignKey(Institution, relates_name='user_qualification_institute', on_delete=models.RESTRICT, blank=True)
+    course = models.ForeignKey(Course, relates_name='user_qualification_course', on_delete=models.RESTRICT, blank=True)
+    started = models.DateField(blank=True, null=True)
+    ended = models.DateField(blank=True, null=True)
     created_on = models.DateTimeField(auto_now_add=True)
     modified_on = models.DateTimeField(auto_now=True)
 

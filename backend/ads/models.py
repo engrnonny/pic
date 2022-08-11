@@ -17,6 +17,9 @@ class Ad(models.Model):
     active = models.BooleanField(default=False)
     link = models.URLField(blank=True, default='')
     slug = models.SlugField(blank=True)
+    user_clicks = models.ManyToManyField(User, related_name='user_ad_clicks', blank=True)
+    general_clicks = models.PositiveBigIntegerField(default=0)
+    views = models.PositiveBigIntegerField(default=0)
 
     def __str__(self):
         return '%s' % (self.title)

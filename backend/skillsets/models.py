@@ -90,6 +90,7 @@ class Job(models.Model):
     min_salary = models.PositiveBigIntegerField(blank=True, null=True)
     max_salary = models.PositiveBigIntegerField(blank=True, null=True)
     risks = models.TextField(blank=True, default='')
+    regulations = models.TextField(blank=True, default='')
     slug = models.SlugField(blank=True, unique=True)
     rating = models.PositiveSmallIntegerField(default=0)
     created_on = models.DateTimeField(auto_now_add=True)
@@ -108,6 +109,27 @@ class Job(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         return super().save(*args, **kwargs)
+
+
+class SubTitle(models.Model):
+    name = models.CharField(max_length=32)
+    job = models.ForeignKey(Job, related_name='job_subtitle', on_delete=models.CASCADE)
+    description = models.TextField()
+    skills = models.ManyToManyField(Skill, blank=True)
+    outlook_details = models.TextField(blank=True, null=True)
+    outlook_summary = models.CharField(max_length=32, blank=True, default='')
+    work_start_time = models.TimeField(blank=True, null=True)
+    work_end_time = models.TimeField(blank=True, null=True)
+    min_salary = models.PositiveBigIntegerField(blank=True, null=True)
+    max_salary = models.PositiveBigIntegerField(blank=True, null=True)
+    risks = models.TextField(blank=True, default='')
+    slug = models.SlugField(blank=True, unique=True)
+    rating = models.PositiveSmallIntegerField(default=0)
+    created_on = models.DateTimeField(auto_now_add=True)
+    modified_on = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return '%s' % (self.name)
 
 
 class Level(models.Model):
@@ -143,10 +165,11 @@ class Level(models.Model):
 
 
 class Role(models.Model):
-    category = models.ManyToManyField(JobCategory, blank=True)
-    subcategory = models.ManyToManyField(JobSubCategory, blank=True)
-    job = models.ManyToManyField(Job, blank=True)
-    level = models.ManyToManyField(Level, blank=True)
+    category = models.ManyToManyField(JobCategory, related_name='category_roles', blank=True)
+    subcategory = models.ManyToManyField(JobSubCategory, related_name='subcategory_roles', blank=True)
+    job = models.ManyToManyField(Job, related_name='job_roles', blank=True)
+    subtitle = models.ManyToManyField(SubTitle, related_name='subtitle_roles', blank=True)
+    level = models.ManyToManyField(Level, related_name='level_roles', blank=True)
     description = models.CharField(max_length=255)
 
     def __str__(self):
