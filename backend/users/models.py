@@ -7,8 +7,33 @@ from django.utils.text import slugify
 
 from education.models import Course
 from skillsets.models import JobCategory, JobSubCategory, Job, Skill, Level
-# from articles.models import Article
 
+
+class Association(models.Model):
+    name = models.CharField(max_length=255, unique=True)
+    acronym = models.CharField(max_length=12, blank=True, default='')
+    description = models.TextField(blank=True, default='')
+    city = models.CharField(max_length=32, blank=True, default='')
+    lga = models.CharField(max_length=32, blank=True, default='')
+    state = models.CharField(max_length=32, blank=True, default='')
+    email = models.EmailField(unique=True, blank=True, null=True)
+    phone = models.CharField(max_length=11, blank=True, default='')
+    url = models.URLField(blank=True, null=True, unique=True)
+    slug = models.SlugField(unique=True)
+    rating = models.FloatField(blank=True, null=True)
+    created_on = models.DateTimeField(auto_now_add=True)
+    modified_on = models.DateTimeField(auto_now=True)
+    # logo
+
+    def __str__(self):
+        return '%s' % (self.name)
+
+    def get_absolute_url(self):
+        return reverse('association-profile', kwargs={'slug': self.slug})
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        return super().save(*args, **kwargs)
 
 class User(AbstractUser):
     GENDER_CHOICES = [
@@ -59,6 +84,7 @@ class User(AbstractUser):
     bio = models.TextField(blank=True, default='')
     profile_pic = models.ImageField(blank=True, null=True, upload_to="main/users/profile-pics")
     linkedin = models.URLField(blank=True, null=True, unique=True)
+    association = models.ManyToManyField(Association, related_name='user_associations', blank=True)
     slug = models.SlugField(unique=True, blank=True)
     author = models.CharField(max_length=7, choices=AUTHOR_STATUS_CHOICES, default='No')
     created_on = models.DateTimeField(auto_now_add=True)
@@ -78,8 +104,7 @@ class User(AbstractUser):
 class Company(models.Model):
     name = models.CharField(max_length=255)
     bio = models.TextField()
-    registration_no = models.CharField(
-        max_length=255, blank=True, null=True, unique=True)
+    registration_no = models.CharField(max_length=255, blank=True, null=True, unique=True)
     registration_date = models.DateField(null=True, blank=True)
     job_category = models.ManyToManyField(JobCategory, related_name='company_job_category', blank=True)
     job_subcategory = models.ManyToManyField(JobSubCategory, related_name='company_job_subcategory', blank=True)
@@ -93,6 +118,7 @@ class Company(models.Model):
     country = models.CharField(max_length=32, blank=True, default='')
     employees = models.PositiveIntegerField(blank=True, null=True)
     employee_users = models.ManyToManyField(User, related_name='registered_users')
+    association = models.ManyToManyField(Association, related_name='company_associations', blank=True)
     rating = models.PositiveSmallIntegerField(blank=True, null=True)
     slug = models.SlugField(blank=True, unique=True)
     creator = models.ForeignKey(User, default='Unknown', on_delete=models.SET_DEFAULT)
@@ -120,7 +146,7 @@ class UserWorkProfile(models.Model):
     level = models.ForeignKey(Level, on_delete=models.PROTECT, blank=True)
     employment_type = models.CharField(max_length=12, blank=True, default='')
     description = models.TextField(blank=True, default='')
-    monthly_salary = models.PositiveBigIntegerField(blank=True, default='')
+    monthly_salary = models.PositiveBigIntegerField(blank=True, null=True)
     company = models.ForeignKey(Company, blank=True, default='', on_delete=models.PROTECT)
     address = models.CharField(max_length=255, blank=True, default='')
     city = models.CharField(max_length=32, blank=True, default='')
@@ -141,7 +167,7 @@ class UserWorkProfile(models.Model):
 
 class UserQualification(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    course = models.ForeignKey(Course, relates_name='user_qualification_course', on_delete=models.RESTRICT, blank=True)
+    course = models.ForeignKey(Course, related_name='user_qualification_course', on_delete=models.RESTRICT, blank=True, null=True)
     started = models.DateField(blank=True, null=True)
     ended = models.DateField(blank=True, null=True)
     verified = models.BooleanField(default=False)
@@ -150,38 +176,6 @@ class UserQualification(models.Model):
 
     def __str__(self):
         return '%s' % (self.user)
-
-
-class Association(models.Model):
-    name = models.CharField(max_length=255, unique=True)
-    acronym = models.CharField(max_length=12, blank=True, default='')
-    description = models.TextField(blank=True, default='')
-    city = models.CharField(max_length=32, blank=True, default='')
-    lga = models.CharField(max_length=32, blank=True, default='')
-    state = models.CharField(max_length=32, blank=True, default='')
-    email = models.EmailField(unique=True, blank=True, null=True)
-    phone = models.CharField(max_length=11, blank=True, default='')
-    url = models.URLField(blank=True, null=True, unique=True)
-    members = models.ManyToManyField(User, related_name="users")
-    job_category = models.ManyToManyField(JobCategory, related_name='association_model_job_category')
-    job_subcategory = models.ManyToManyField(JobSubCategory, related_name='association_model_job_subcategory')
-    job = models.ManyToManyField(Job, related_name='association_model_job')
-    skill = models.ManyToManyField(Skill, related_name='association_model_skill')
-    slug = models.SlugField(unique=True)
-    rating = models.FloatField(blank=True, null=True)
-    created_on = models.DateTimeField(auto_now_add=True)
-    modified_on = models.DateTimeField(auto_now=True)
-    # logo
-
-    def __str__(self):
-        return '%s' % (self.name)
-
-    def get_absolute_url(self):
-        return reverse('association-profile', kwargs={'slug': self.slug})
-
-    def save(self, *args, **kwargs):
-        self.slug = slugify(self.name)
-        return super().save(*args, **kwargs)
 
 
 class Review(models.Model):

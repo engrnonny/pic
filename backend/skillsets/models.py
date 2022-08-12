@@ -1,7 +1,6 @@
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
-from users.models import Association
 
 class Skill(models.Model):
     GROUP_CHOICES = [
@@ -12,9 +11,10 @@ class Skill(models.Model):
     name = models.CharField(max_length=64, unique=True)
     overview = models.CharField(max_length=255, blank=True, null=True)
     description = models.TextField()
-    group = models.CharField(blank=True, choices=GROUP_CHOICES, null=True)
+    group = models.CharField(max_length=32, blank=True, choices=GROUP_CHOICES, null=True)
     outlook_details = models.TextField(blank=True, null=True)
     outlook_summary = models.CharField(max_length=32, blank=True, default='')
+    association = models.ManyToManyField('users.Association', related_name='skill_associations', blank=True)
     rating = models.PositiveSmallIntegerField(default=0)
     slug = models.SlugField(blank=True, unique=True)
     created_on = models.DateTimeField(auto_now_add=True)
@@ -37,6 +37,7 @@ class JobCategory(models.Model):
     skills = models.ManyToManyField(Skill, blank=True)
     outlook_details = models.TextField(blank=True, null=True)
     outlook_summary = models.CharField(max_length=32, blank=True, null=True)
+    association = models.ManyToManyField('users.Association', related_name='job_category_associations', blank=True)
     rating = models.PositiveSmallIntegerField(default=0)
     slug = models.SlugField(blank=True, unique=True)
     created_on = models.DateTimeField(auto_now_add=True)
@@ -63,6 +64,7 @@ class JobSubCategory(models.Model):
     skills = models.ManyToManyField(Skill, blank=True)
     outlook_details = models.TextField(blank=True, null=True)
     outlook_summary = models.CharField(max_length=32, blank=True, default='')
+    association = models.ManyToManyField('users.Association', related_name='job_subcategory_associations', blank=True)
     slug = models.SlugField(blank=True, unique=True)
     rating = models.PositiveSmallIntegerField(default=0)
     created_on = models.DateTimeField(auto_now_add=True)
@@ -101,6 +103,7 @@ class Job(models.Model):
     max_salary = models.PositiveBigIntegerField(blank=True, null=True)
     risks = models.TextField(blank=True, default='')
     regulations = models.TextField(blank=True, default='')
+    association = models.ManyToManyField('users.Association', related_name='job_associations', blank=True)
     slug = models.SlugField(blank=True, unique=True)
     rating = models.PositiveSmallIntegerField(default=0)
     created_on = models.DateTimeField(auto_now_add=True)
@@ -193,7 +196,7 @@ class Step(models.Model):
     job = models.ManyToManyField(Job, blank=True)
     level = models.ManyToManyField(Level, blank=True)
     description = models.CharField(max_length=255)
-    association = models.ForeignKey(Association, on_delete=models.SET_NULL, related_name='step_association', blank=True, null=True)
+    association = models.ForeignKey('users.Association', on_delete=models.SET_NULL, related_name='step_association', blank=True, null=True)
 
     def __str__(self):
         return '%s' % (self.category)
