@@ -10,6 +10,6 @@
 
 git add *
 
-git commit -m "Office - Dell - Still learning docker"
+git commit -m "Office - Dell - Started working with rest_framework"
 
 git push

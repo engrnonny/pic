@@ -20,6 +20,8 @@ class Ad(models.Model):
     user_clicks = models.ManyToManyField(User, related_name='user_ad_clicks', blank=True)
     general_clicks = models.PositiveBigIntegerField(default=0)
     views = models.PositiveBigIntegerField(default=0)
+    created_on = models.DateTimeField(auto_now_add=True)
+    modified_on = models.DateTimeField(auto_now=True)
 
     def __str__(self):
         return '%s' % (self.title)

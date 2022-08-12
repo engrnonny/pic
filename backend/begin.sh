@@ -1,6 +1,6 @@
 !/usr/bin/expect
 
-source env/Scripts/activate
+# source env/Scripts/activate
 
 # git pull
 
