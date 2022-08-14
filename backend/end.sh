@@ -10,6 +10,6 @@
 
 git add *
 
-git commit -m "Office - Dell - Started working with rest_framework"
+git commit -m "Home - HP1 - Getting error with rest_framework"
 
 git push

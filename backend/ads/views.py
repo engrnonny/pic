@@ -1,35 +1,27 @@
-from django.http import HttpResponse, JsonResponse
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404, render
-# from rest_framework import viewsets
-from rest_framework import permissions
-from rest_framework.parsers import JSONParser
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 from .models import Ad
 from .serializers import AdSerializer
 
 
-# class AdViewSet(viewsets.ModelViewSet):
-#     queryset = Ad.objects.all().order_by('-created_on')
-#     serializer_class = AdSerializer
-#     permission_classes = [permissions.IsAuthenticated]
-
-
 # All ads view
-@csrf_exempt
-def ads(request):
+@api_view(['GET', 'POST'])
+def ads(request, format=None):
     if request.method == 'GET':
-        snippets = Ad.objects.all()
-        serializer = AdSerializer(snippets, many=True)
-        return JsonResponse(serializer.data, safe=False)
+        ads = Ad.objects.all()
+        serializer = AdSerializer(ads, many=True)
+        return Response(serializer.data)
 
     elif request.method == 'POST':
-        data = JSONParser().parse(request)
-        serializer = AdSerializer(data=data)
+        serializer = AdSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse(serializer.data, status=201)
-        return JsonResponse(serializer.errors, status=400)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 # Single Ad view
