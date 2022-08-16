@@ -9,6 +9,7 @@ from .serializers import AdSerializer
 
 
 # All ads view
+@csrf_exempt
 @api_view(['GET', 'POST'])
 def ads(request, format=None):
     if request.method == 'GET':
@@ -26,9 +27,21 @@ def ads(request, format=None):
 
 # Single Ad view
 
-def ad(request, slug):
+@api_view(['GET', 'PUT', 'DELETE'])
+def ad(request, slug, format=None):
     ad = get_object_or_404(Ad, slug=slug)
-    context = {
-        'ad': ad
-    }
-    return render(request, 'ads/ad.html', context)
+
+    if request.method == 'GET':
+        serializer = AdSerializer(ad)
+        return Response(serializer.data)
+
+    elif request.method == 'PUT':
+        serializer = AdSerializer(ad, data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    elif request.method == 'DELETE':
+        ad.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)

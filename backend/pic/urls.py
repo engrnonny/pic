@@ -19,8 +19,8 @@ from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
 
-router = routers.DefaultRouter()
-# router.register(r'ads', AdViewSet)
+# router = routers.DefaultRouter()
+# # router.register(r'ads', AdViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,7 +30,7 @@ urlpatterns = [
     path('articles/', include('articles.urls')),
     path('resources/', include('resources.urls')),
     path('education/', include('education.urls')),
-    path('', include(router.urls)),
+    # path('', include(router.ur"ls)),"
     path('skillsets/', include('skillsets.urls')),
     path('users/', include('users.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
