@@ -14,56 +14,6 @@
     </head>
     <body>
         <header>
-            <nav>
-                <span>
-                    <a href="{% url 'index' %}">
-                        PIC
-                    </a>
-                </span>
-                <span>
-                    <a href="{% url 'about' %}">
-                        About
-                    </a>
-                </span>
-                <span>
-                    <a href="{% url 'articles-landing-page' %}">
-                        Articles
-                    </a>
-                </span>
-                <span>
-                    <a href="{% url 'skillsets' %}">
-                        Skillsets
-                    </a>
-                </span>
-                <span>
-                    <a href="{% url 'resources' %}">
-                        Resources
-                    </a>
-                </span>
-                <span>
-                    <a href="{% url 'ads' %}">
-                        Ads
-                    </a>
-                </span>
-                <span>
-                    <a href="{% url 'members-landing-page' %}">
-                        Members
-                    </a>
-                </span>
-                {% if request.user.is_authenticated %}
-                    <span>
-                        <a href="{% url 'logout' %}">
-                            Logout
-                        </a>
-                    </span>
-                {% else %}
-                    <span>
-                        <a href="{% url 'login' %}">
-                            Login
-                        </a>
-                    </span>
-                {% endif %}
-            </nav>
         </header>
         <main>
             {% block main %}

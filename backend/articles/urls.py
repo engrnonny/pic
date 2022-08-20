@@ -1,5 +1,14 @@
 from django.urls import path
-from articles.views import *
+from rest_framework.urlpatterns import format_suffix_patterns
+from .views import (
+    articles_landing_page,
+    all_articles,
+    article_tag,
+    article_group,
+    article,
+    like_unlike_article,
+    new_article
+)
 
 
 urlpatterns = [
@@ -11,6 +20,8 @@ urlpatterns = [
     path('<str:group>/<slug:slug>/', article, name='article'),
     path('<str:group>/<slug:slug>/l/', like_unlike_article, name='like-unlike-article'),
 ]
+
+urlpatterns = format_suffix_patterns(urlpatterns)
 
 # urlpatterns = [
 #     path('blog/<int:year>/', views.year_archive, {'foo': 'bar'}),

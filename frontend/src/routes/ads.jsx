@@ -36,7 +36,7 @@ class Ads extends React.Component {
   render() {
     return (
       <div>
-        <h4>testing</h4>
+        <h4>testing</h4>  
       {this.state.ads.map((ad) => {
         const { id, title, message } = ad;
         return (

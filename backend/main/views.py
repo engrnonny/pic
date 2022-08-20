@@ -1,4 +1,4 @@
-from django.shortcuts import get_list_or_404, get_object_or_404, redirect, render
+from django.shortcuts import render
 
 
 # Home page

@@ -1,16 +1,27 @@
+from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_list_or_404, get_object_or_404, redirect, render
+
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
 from .forms import ArticleForm
 from users.forms import ReviewForm
 from .models import Article, Tag
+from .serializers import ArticleSerializer, TagSerializer
 from skillsets.models import Job, JobCategory, JobSubCategory, Skill
 from users.models import User, Review
 
 # Articles landing page
 
-def articles_landing_page(request):
-    return render(request, 'articles/articles_landing_page.html')
+@csrf_exempt
+@api_view(['GET', 'POST'])
+def articles_landing_page(request, format=None):
+    if request.method == 'GET':
+        articles = Article.objects.filter(status='published').order_by('-modified_on').order_by('views')[:2]
+        serializer = ArticleSerializer(articles, many=True)
+        return Response(serializer.data)
 
 # Articles list view
 
