@@ -22,7 +22,7 @@ class App extends Component {
           this.setState({
             ads: res.data
         });
-        console.log(res.data.title);
+        console.log(this.state.ads);
       })
     };
 
@@ -36,7 +36,7 @@ class App extends Component {
         }}
       >
         <Link to="/invoices">Invoices</Link> |{" "}
-        <Link to="/expenses">Expenses</Link>
+        <Link to="/ads">Ads</Link>
       </nav>
       <Outlet />
       </div>
