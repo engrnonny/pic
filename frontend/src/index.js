@@ -10,6 +10,7 @@ import './index.css';
 
 import reportWebVitals from './reportWebVitals';
 import App from './App';
+import About from "./routes/about";
 import Ads from "./routes/ads";
 import Apps from "./routes/apps";
 import Articles from "./routes/articles";
@@ -27,6 +28,7 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
+          <Route path="about" element={<About />} />
         <Route path="/" element={<App />}>
           <Route path="ads" element={<Ads />} />
           <Route path="articles" element={<Articles />} />

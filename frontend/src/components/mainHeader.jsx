@@ -1,9 +1,7 @@
 
 import React, { Component } from 'react';
-import { NavLink } from "react-router-dom";
+import { Outlet, NavLink } from "react-router-dom";
 
-// import logo from './logo.svg';
-import './App.css';
 
 
 class MainHeader extends Component {
@@ -31,6 +29,7 @@ class MainHeader extends Component {
                                 >
                                     Ads
                                 </NavLink>
+                                <Outlet />
                             </li>
                             {/* <li>
                                 <NavLink to="tasks">
