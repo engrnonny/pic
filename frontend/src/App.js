@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-
+import { Outlet } from 'react-router-dom'
 // import logo from './logo.svg';
 import './App.css';
 
 import MainHeader from './components/mainHeader';
+import MainFooter from './components/mainFooter';
 
 
 class App extends Component {
@@ -18,14 +19,10 @@ class App extends Component {
     return (
       <main className="App">
         <MainHeader />
-        <footer>
-          Footer section
-        </footer>
+        <Outlet />
+        <MainFooter />
       </main>
     );
   }
 }
 export default App;
-
-
-/

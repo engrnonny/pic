@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { Outlet, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 
 
@@ -18,18 +18,135 @@ class MainHeader extends Component {
         return (
             <header className="MainHeader">
                 <span>
+                    Logo
+                </span>
+                <span>
+                    Search
+                </span>
+                <span>
                     <nav>
                         <ul>
                             <li>
                                 <NavLink
-                                    to="ads"
+                                    to="about"
                                     className={({ isActive }) =>
                                         isActive ? this.state.activeClassName : undefined
                                     }
                                 >
-                                    Ads
+                                    About
                                 </NavLink>
-                                <Outlet />
+                            </li>
+                            <li>
+                                <NavLink
+                                    to="info"
+                                    className={({ isActive }) =>
+                                        isActive ? this.state.activeClassName : undefined
+                                    }
+                                >
+                                    Info
+                                </NavLink>
+                                <ul>
+                                    <li>
+                                        <NavLink
+                                            to="articles"
+                                            className={({ isActive }) =>
+                                                isActive ? this.state.activeClassName : undefined
+                                            }
+                                        >
+                                            Articles
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink
+                                            to="companies"
+                                            className={({ isActive }) =>
+                                                isActive ? this.state.activeClassName : undefined
+                                            }
+                                        >
+                                            Companies
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink
+                                            to="jobs"
+                                            className={({ isActive }) =>
+                                                isActive ? this.state.activeClassName : undefined
+                                            }
+                                        >
+                                            Jobs
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink
+                                            to="education"
+                                            className={({ isActive }) =>
+                                                isActive ? this.state.activeClassName : undefined
+                                            }
+                                        >
+                                            Learning Institutions
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink
+                                            to="skills"
+                                            className={({ isActive }) =>
+                                                isActive ? this.state.activeClassName : undefined
+                                            }
+                                        >
+                                            Skills
+                                        </NavLink>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <ul>
+                                    Resources
+                                    <li>
+                                        <NavLink
+                                            to="apps"
+                                            className={({ isActive }) =>
+                                                isActive ? this.state.activeClassName : undefined
+                                            }
+                                        >
+                                            Apps
+                                        </NavLink>
+                                    </li>
+                                    <li>
+                                        <NavLink
+                                            to="data"
+                                            className={({ isActive }) =>
+                                                isActive ? this.state.activeClassName : undefined
+                                            }
+                                        >
+                                            Data
+                                        </NavLink>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <NavLink
+                                    to="contact"
+                                    className={({ isActive }) =>
+                                        isActive ? this.state.activeClassName : undefined
+                                    }
+                                >
+                                    Contact
+                                </NavLink>
+                            </li>
+                            <li>
+                                <ul>
+                                    User Profile
+                                    <li>
+                                        <NavLink
+                                            to="login"
+                                            className={({ isActive }) =>
+                                                isActive ? this.state.activeClassName : undefined
+                                            }
+                                        >
+                                            Login/Register
+                                        </NavLink>
+                                    </li>
+                                </ul>
                             </li>
                             {/* <li>
                                 <NavLink to="tasks">

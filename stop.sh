@@ -10,8 +10,8 @@
 
 git add *
 
-# git commit -m "Home - HP1 - React now receives Article from Django"
+git commit -m "Home - HP1 - Still working on routing"
 
-git commit -m "Office - Dell - Routes having a problem"
+# git commit -m "Office - Dell - Routes having a problem"
 
 git push
