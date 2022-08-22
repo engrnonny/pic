@@ -7,10 +7,18 @@ import {
 } from "react-router-dom";
 
 import './index.css';
+
+import reportWebVitals from './reportWebVitals';
 import App from './App';
 import Ads from "./routes/ads";
+import Apps from "./routes/apps";
+import Articles from "./routes/articles";
+import Data from "./routes/data";
+import Education from "./routes/education";
+import Resources from "./routes/resources";
+import Skillsets from "./routes/skillsets";
+import Users from "./routes/users";
 import Invoices from "./routes/invoices";
-import reportWebVitals from './reportWebVitals';
 
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -21,6 +29,14 @@ root.render(
       <Routes>
         <Route path="/" element={<App />}>
           <Route path="ads" element={<Ads />} />
+          <Route path="articles" element={<Articles />} />
+          <Route path="education" element={<Education />} />
+          <Route path="resources" element={<Resources />}>
+            <Route path="apps" element={<Apps />} />
+            <Route path="data" element={<Data />} />
+          </Route>
+          <Route path="skillsets" element={<Skillsets />} />
+          <Route path="users" element={<Users />} />
           <Route path="invoices" element={<Invoices />} />
           <Route
             path="*"
