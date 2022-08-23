@@ -14,7 +14,12 @@ class About extends React.Component {
       <div className='about'>
         <h4>About</h4>
         <section>
-          This is the about page
+            <p>
+              PIC is a free guide platform that gives you a plan to avoid failure and achieve success.
+            </p>
+            <p>
+              We help you survive, thrive, be accepted, be loved and achieve great things in your career.
+            </p>
         </section>
       </div>
     );

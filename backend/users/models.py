@@ -42,10 +42,13 @@ class User(AbstractUser):
     ]
 
     TITLE_CHOICES = [
-        ('BARR', 'Barr'),
-        ('DR', 'Dr'),
-        ('ENGR', 'Engr'),
-        ('PROF', 'Prof'),
+        ('Barr', 'Barr'),
+        ('Dr', 'Dr'),
+        ('Engr', 'Engr'),
+        ('Miss', 'Miss'),
+        ('Mr', 'Mr'),
+        ('Mrs', 'Mrs'),
+        ('Prof', 'Prof'),
     ]
 
     AUTHOR_STATUS_CHOICES = [

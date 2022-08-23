@@ -18,7 +18,14 @@ class MainHeader extends Component {
         return (
             <header className="MainHeader">
                 <span>
-                    Logo
+                    <NavLink
+                        to="/"
+                        className={({ isActive }) =>
+                            isActive ? this.state.activeClassName : undefined
+                        }
+                    >
+                        Logo
+                    </NavLink>
                 </span>
                 <span>
                     Search
@@ -100,27 +107,38 @@ class MainHeader extends Component {
                             </li>
                             <li>
                                 <ul>
-                                    Resources
                                     <li>
                                         <NavLink
-                                            to="apps"
+                                            to="resources"
                                             className={({ isActive }) =>
                                                 isActive ? this.state.activeClassName : undefined
                                             }
                                         >
-                                            Apps
+                                            Resources
                                         </NavLink>
                                     </li>
-                                    <li>
-                                        <NavLink
-                                            to="data"
-                                            className={({ isActive }) =>
-                                                isActive ? this.state.activeClassName : undefined
-                                            }
-                                        >
-                                            Data
-                                        </NavLink>
-                                    </li>
+                                    <ul>
+                                        <li>
+                                            <NavLink
+                                                to="apps"
+                                                className={({ isActive }) =>
+                                                    isActive ? this.state.activeClassName : undefined
+                                                }
+                                            >
+                                                Apps
+                                            </NavLink>
+                                        </li>
+                                        <li>
+                                            <NavLink
+                                                to="data"
+                                                className={({ isActive }) =>
+                                                    isActive ? this.state.activeClassName : undefined
+                                                }
+                                            >
+                                                Data
+                                            </NavLink>
+                                        </li>
+                                    </ul>
                                 </ul>
                             </li>
                             <li>

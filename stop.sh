@@ -10,7 +10,7 @@
 
 git add *
 
-git commit -m "Home - HP1 - Still working on routing"
+git commit -m "Home - HP1 - Can't recieve unique parameters from url"
 
 # git commit -m "Office - Dell - Routes having a problem"
 

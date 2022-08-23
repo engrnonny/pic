@@ -1,0 +1,7 @@
+BACKEND
+
+FRONTEND
+    - Work on breadcrumbs in Home page
+    
+FULL STACK
+    - Fix image upload in Article
