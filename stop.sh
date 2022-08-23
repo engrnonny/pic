@@ -10,7 +10,7 @@
 
 git add *
 
-git commit -m "Home - HP1 - Can't recieve unique parameters from url"
+git commit -m "Home - HP1 - Axios now working but data from api not showing"
 
 # git commit -m "Office - Dell - Routes having a problem"
 
