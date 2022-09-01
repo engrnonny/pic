@@ -18,6 +18,7 @@ export default function Article(props) {
       });
     }, []);
 
+    console.log(article.category);
 
     return (
       <article key={article.id} className="Article">
@@ -26,15 +27,16 @@ export default function Article(props) {
         <p>{article.body}</p>
         <p>{article.group}</p>
         <p>{article.video_link}</p>
-        <section>
+        {/* <section>
           {article.category.map((category) => {
             const { id, name } = category;
             return (
               <div key={id}>
+                <h5>{name}</h5>
               </div>
             );
           })}
-        </section>
+        </section> */}
       </article>
       // <div>
       //   <h3>{article.title}</h3>
