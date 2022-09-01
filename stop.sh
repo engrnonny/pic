@@ -10,7 +10,7 @@
 
 git add *
 
-git commit -m "Home - HP1 - Axios now working but data from api not showing"
+git commit -m "Home - HP1 - Data now showing but can't access children data"
 
 # git commit -m "Office - Dell - Routes having a problem"
 
