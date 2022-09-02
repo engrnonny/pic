@@ -20,7 +20,7 @@ class JobCategorySerializer(serializers.ModelSerializer):
 class JobSubCategorySerializer(serializers.ModelSerializer):
     skills = SkillSerializer(read_only=True, many=True)
     association = AssociationSerializer(read_only=True, many=True)
-    category = JobCategorySerializer(read_only=True, many=True)
+    category = JobCategorySerializer(read_only=True)
 
     class Meta:
         model = JobSubCategory
@@ -29,7 +29,7 @@ class JobSubCategorySerializer(serializers.ModelSerializer):
 class JobSerializer(serializers.ModelSerializer):
     skills = SkillSerializer(read_only=True, many=True)
     association = AssociationSerializer(read_only=True, many=True)
-    subcategory = JobSubCategorySerializer(read_only=True, many=True)
+    subcategory = JobSubCategorySerializer(read_only=True)
 
     class Meta:
         model = Job

@@ -27,16 +27,61 @@ export default function Article(props) {
         <p>{article.body}</p>
         <p>{article.group}</p>
         <p>{article.video_link}</p>
-        {/* <section>
-          {article.category.map((category) => {
+        <section>
+          <h5>Category</h5>
+          {article && article.category.map((category) => {
             const { id, name } = category;
             return (
               <div key={id}>
-                <h5>{name}</h5>
+                <a href='#'>{name}</a>
               </div>
             );
           })}
-        </section> */}
+        </section>
+        <section>
+          <h5>Subcategory</h5>
+          {article && article.subcategory.map((subcategory) => {
+            const { id, name } = subcategory;
+            return (
+              <div key={id}>
+                <a href='#'>{name}</a>
+              </div>
+            );
+          })}
+        </section>
+        <section>
+          <h5>Jobs</h5>
+          {article && article.job.map((job) => {
+            const { id, title } = job;
+            return (
+              <div key={id}>
+                <a href='#'>{title}</a>
+              </div>
+            );
+          })}
+        </section>
+        <section>
+          <h5>Skills</h5>
+          {article && article.skills.map((skills) => {
+            const { id, name } = skills;
+            return (
+              <div key={id}>
+                <a href='#'>{name}</a>
+              </div>
+            );
+          })}
+        </section>
+        <section>
+          <h5>Tags</h5>
+          {article && article.tags.map((tags) => {
+            const { id, name } = tags;
+            return (
+              <div key={id}>
+                <a href='#'>{name}</a>
+              </div>
+            );
+          })}
+        </section>
       </article>
       // <div>
       //   <h3>{article.title}</h3>

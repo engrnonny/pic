@@ -10,7 +10,7 @@
 
 git add *
 
-git commit -m "Home - HP1 - STill can't access children data but making progress"
+git commit -m "Home - HP1 - Can now access children data"
 
 # git commit -m "Office - Dell - Routes having a problem"
 
